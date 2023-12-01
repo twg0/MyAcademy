@@ -1,4 +1,6 @@
-package com.twg0.myacademy.domain.grade.entity;
+package com.twg0.myacademy.domain.exam.entity;
+
+import com.twg0.myacademy.domain.common.entity.BaseEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Grade {
+public class Grade extends BaseEntity {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

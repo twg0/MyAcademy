@@ -38,12 +38,12 @@ public class Grade extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "grade_id")
-	private Grade grade;
+	private Exam exam;
 
 	@Builder
-	public Grade(String score, Member member, Grade grade) {
+	public Grade(String score, Member member, Exam exam) {
 		this.score = score;
 		this.member = member;
-		this.grade = grade;
+		this.exam = exam;
 	}
 }

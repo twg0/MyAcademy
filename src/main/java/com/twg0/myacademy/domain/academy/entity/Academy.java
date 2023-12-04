@@ -28,7 +28,7 @@ public class Academy extends BaseEntity {
 	@Column(name = "academy_id")
 	private Long id;
 
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 30)
 	private String name;
 
 	@Column(nullable = false)
@@ -41,12 +41,23 @@ public class Academy extends BaseEntity {
 	@ColumnDefault("0")
 	private Integer studentNumber;
 
+	@Column(unique = true, nullable = false, length = 30)
+	private String userId;
+
+	@Column(nullable = false)
+	private String password;
+
 	@Builder
-	public Academy(String name, String phoneNumber, String address, Integer studentNumber) {
+	public Academy(String name, String phoneNumber, String address, Integer studentNumber, String userId,
+		String password,
+		List<Member> members) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.studentNumber = studentNumber;
+		this.userId = userId;
+		this.password = password;
+		this.members = members;
 	}
 
 	/* 연관관계 필요 */

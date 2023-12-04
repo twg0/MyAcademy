@@ -48,7 +48,7 @@ class AcademyRepositoryTest {
 	}
 
 	@Test
-	public void 학원정보가존재하는가() throws Exception {
+	public void 학원조회테스트() throws Exception {
 		// given
 		final Academy academy = Academy.builder()
 			.name("서강학원")
@@ -99,5 +99,25 @@ class AcademyRepositoryTest {
 
 		// then
 		assertThrows(DataIntegrityViolationException.class,() -> academyRepository.save(academy2));
+	}
+
+	@Test
+	public void 학원삭제테스트() throws Exception {
+		final Academy academy = Academy.builder()
+			.name("서강학원")
+			.address("서울특별시 송파구 마천동")
+			.phoneNumber("02-123-4567")
+			.studentNumber(200)
+			.userId("seokang")
+			.password("tjrkd")
+			.build();
+
+		// when
+		academyRepository.save(academy);
+		academyRepository.deleteByUserId("seokang");
+		Academy result = academyRepository.findByUserId("seokang");
+
+		// then
+		assertThat(result).isNull();
 	}
 }

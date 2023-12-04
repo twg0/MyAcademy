@@ -11,4 +11,6 @@ import com.twg0.myacademy.domain.academy.entity.Academy;
 public interface AcademyRepository extends JpaRepository<Academy, Long> {
 
 	Academy findByUserId(final String userId);
+
+	void deleteByUserId(final String userId);
 }

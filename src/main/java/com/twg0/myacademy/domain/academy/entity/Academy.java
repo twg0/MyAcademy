@@ -3,6 +3,8 @@ package com.twg0.myacademy.domain.academy.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.member.entity.Member;
 
@@ -21,13 +23,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Academy extends BaseEntity {
+
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "academy_id")
 	private Long id;
 
+	@Column(nullable = false, length = 20)
 	private String name;
+
+	@Column(nullable = false)
 	private String phoneNumber;
+
+	@Column(nullable = false)
 	private String address;
+
+	@Column(nullable = false)
+	@ColumnDefault("0")
 	private Integer studentNumber;
 
 	@Builder

@@ -19,14 +19,6 @@ class AcademyRepositoryTest {
 	private AcademyRepository academyRepository;
 
 	@Test
-	public void AcademyRepository가Null이아님() throws Exception {
-	    // given
-	    // when
-	    // then
-		assertThat(academyRepository).isNotNull();
-	}
-
-	@Test
 	public void 학원등록() throws Exception {
 	    // given
 		final Academy academy = Academy.builder()

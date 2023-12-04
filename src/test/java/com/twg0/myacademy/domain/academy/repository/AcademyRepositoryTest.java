@@ -42,4 +42,30 @@ class AcademyRepositoryTest {
 		assertThat(result.getUserId()).isEqualTo("seokang");
 		assertThat(result.getPassword()).isEqualTo("tjrkd");
 	}
+
+	@Test
+	public void 학원ID가존재하는가() throws Exception {
+		// given
+		final Academy academy = Academy.builder()
+			.name("서강학원")
+			.address("서울특별시 송파구 마천동")
+			.phoneNumber("02-123-4567")
+			.studentNumber(200)
+			.userId("seokang")
+			.password("tjrkd")
+			.build();
+
+		// when
+		academyRepository.save(academy);
+		final Academy result = academyRepository.findByUserId("seokang");
+
+		// then
+		assertThat(result.getId()).isNotNull();
+		assertThat(result.getName()).isEqualTo("서강학원");
+		assertThat(result.getAddress()).isEqualTo("서울특별시 송파구 마천동");
+		assertThat(result.getPhoneNumber()).isEqualTo("02-123-4567");
+		assertThat(result.getStudentNumber()).isEqualTo(200);
+		assertThat(result.getUserId()).isEqualTo("seokang");
+		assertThat(result.getPassword()).isEqualTo("tjrkd");
+	}
 }

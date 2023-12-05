@@ -33,22 +33,33 @@ public class Member extends BaseEntity {
 	@Column(name = "member_id")
 	private Long id;
 
-	@Column(unique = true)
+	@Column(nullable = false, length = 20)
 	private String username;
 
+	@Column(nullable = false, unique = true, length = 20)
+	private String userId;
+
+	@Column(nullable = false, length = 20)
+	private String password;
+
+	@Column(nullable = false, length = 20)
 	private Instant birth;
+
+	@Column(length = 20)
 	private String school;
+
+	@Column(nullable = false, length = 20)
 	private Integer age;
 
 	@Builder
-	public Member(String username, Instant birth, String school, Integer age, Academy academy) {
+	public Member(String username, String userId, String password, Instant birth, String school, Integer age) {
 		this.username = username;
+		this.userId = userId;
+		this.password = password;
 		this.birth = birth;
 		this.school = school;
 		this.age = age;
-		this.academy = academy;
 	}
-
 
 	/* 연관관계 필요 */
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -60,6 +71,10 @@ public class Member extends BaseEntity {
 
 	@OneToMany(mappedBy = "member")
 	private List<Grade> grades = new ArrayList<>();
+
+	public void setAcademy(Academy academy) {
+		this.academy = academy;
+	}
 
 	public void addMemberClasses(MemberClasses memberClasses) {
 		this.memberClasses.add(memberClasses);

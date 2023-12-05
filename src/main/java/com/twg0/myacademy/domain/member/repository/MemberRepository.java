@@ -7,4 +7,8 @@ import com.twg0.myacademy.domain.member.entity.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
+
+	Member findByUserId(String userId);
+
+
 }

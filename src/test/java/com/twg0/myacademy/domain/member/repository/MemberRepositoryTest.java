@@ -106,4 +106,24 @@ class MemberRepositoryTest {
 	    // then
 		assertThrows(DataIntegrityViolationException.class, () -> memberRepository.save(member2));
 	}
+
+	@Test
+	public void 멤버삭제테스트() throws Exception {
+		// given
+		final Member member = Member.builder()
+			.username("홍길동")
+			.userId("hong")
+			.password("gildong")
+			.age(18)
+			.birth(LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toInstant())
+			.school("방산")
+			.build();
+
+		// when
+		memberRepository.save(member);
+	    memberRepository.deleteByUserId("hong");
+		Member result = memberRepository.findByUserId("hong");
+		// then
+	    assertThat(result).isNull();
+	}
 }

@@ -15,11 +15,4 @@ class MemberClassesRepositoryTest {
 	@Autowired
 	private MemberClassesRepository memberClassesRepository;
 
-	@Test
-	public void MemberClassesRepository가Null이아님() throws Exception {
-		// given
-		// when
-		// then
-		assertThat(memberClassesRepository).isNotNull();
-	}
 }

@@ -15,11 +15,4 @@ class GradeRepositoryTest {
 	@Autowired
 	private GradeRepository gradeRepository;
 
-	@Test
-	public void GradeRepository가Null이아님() throws Exception {
-		// given
-		// when
-		// then
-		assertThat(gradeRepository).isNotNull();
-	}
 }

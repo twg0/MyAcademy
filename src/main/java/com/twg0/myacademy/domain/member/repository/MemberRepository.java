@@ -10,5 +10,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	Member findByUserId(String userId);
 
-
+	void deleteByUserId(String userId);
 }

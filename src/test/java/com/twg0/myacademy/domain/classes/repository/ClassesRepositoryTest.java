@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
@@ -87,6 +88,31 @@ class ClassesRepositoryTest {
 		assertThat(result.getCountOfStudent()).isEqualTo(classes.getCountOfStudent());
 		assertThat(result.getTeacher()).isEqualTo(classes.getTeacher());
 		assertThat(result.getAcademy()).isNotNull();
+	}
+
+	@Test
+	public void 반중복테스트() throws Exception {
+		// given
+		final Classes classes1 = Classes.builder()
+			.subject("수학")
+			.className("예비고1A")
+			.countOfStudent(0)
+			.teacher("kim")
+			.academy(ACADEMY)
+			.build();
+
+		final Classes classes2 = Classes.builder()
+			.subject("과학")
+			.className("예비고1A")
+			.countOfStudent(0)
+			.teacher("seo")
+			.academy(ACADEMY)
+			.build();
+
+		// when
+		classesRepository.save(classes1);
+		// then
+		assertThrows(DataIntegrityViolationException.class, () -> classesRepository.save(classes2));
 	}
 
 	@Test

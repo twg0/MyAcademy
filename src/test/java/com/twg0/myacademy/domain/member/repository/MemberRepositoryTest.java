@@ -11,6 +11,9 @@ import java.time.Year;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -31,11 +34,12 @@ class MemberRepositoryTest {
 	@Autowired
 	private MemberRepository memberRepository;
 
-	private final Instant BIRTH = LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toInstant();
+	private Academy ACADEMY;
 
-	@Test
-	public void 멤버등록테스트() throws Exception {
-	    // given
+	private Instant BIRTH;
+
+	@BeforeEach
+	public void setUp() {
 		final Academy academy = Academy.builder()
 			.name("서강학원")
 			.address("서울특별시 송파구 마천동")
@@ -44,7 +48,14 @@ class MemberRepositoryTest {
 			.userId("seokang")
 			.password("tjrkd")
 			.build();
+		ACADEMY = academy;
+		academyRepository.save(academy);
+		BIRTH = LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toInstant();
+	}
 
+	@Test
+	public void 멤버등록테스트() throws Exception {
+	    // given
 		final Member member = Member.builder()
 			.username("홍길동")
 			.userId("hong")
@@ -52,11 +63,10 @@ class MemberRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
-			.academy(academy)
+			.academy(ACADEMY)
 			.build();
 
 	    // when
-		academyRepository.save(academy);
 		Member result = memberRepository.save(member);
 
 		// then
@@ -73,15 +83,6 @@ class MemberRepositoryTest {
 	@Test
 	public void 멤버조회테스트() throws Exception {
 		// given
-		final Academy academy = Academy.builder()
-			.name("서강학원")
-			.address("서울특별시 송파구 마천동")
-			.phoneNumber("02-123-4567")
-			.studentNumber(200)
-			.userId("seokang")
-			.password("tjrkd")
-			.build();
-
 		final Member member = Member.builder()
 			.username("홍길동")
 			.userId("hong")
@@ -89,11 +90,10 @@ class MemberRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
-			.academy(academy)
+			.academy(ACADEMY)
 			.build();
 
 		// when
-		academyRepository.save(academy);
 		memberRepository.save(member);
 		Member result = memberRepository.findByUserId("hong");
 
@@ -111,15 +111,6 @@ class MemberRepositoryTest {
 	@Test
 	public void 멤버중복테스트() throws Exception {
 		// given
-		final Academy academy = Academy.builder()
-			.name("서강학원")
-			.address("서울특별시 송파구 마천동")
-			.phoneNumber("02-123-4567")
-			.studentNumber(200)
-			.userId("seokang")
-			.password("tjrkd")
-			.build();
-
 		final Member member1 = Member.builder()
 			.username("홍길동")
 			.userId("hong")
@@ -127,7 +118,7 @@ class MemberRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
-			.academy(academy)
+			.academy(ACADEMY)
 			.build();
 
 		final Member member2 = Member.builder()
@@ -137,11 +128,10 @@ class MemberRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
-			.academy(academy)
+			.academy(ACADEMY)
 			.build();
 
 		// when
-		academyRepository.save(academy);
 		memberRepository.save(member1);
 
 	    // then
@@ -151,15 +141,6 @@ class MemberRepositoryTest {
 	@Test
 	public void 멤버삭제테스트() throws Exception {
 		// given
-		final Academy academy = Academy.builder()
-			.name("서강학원")
-			.address("서울특별시 송파구 마천동")
-			.phoneNumber("02-123-4567")
-			.studentNumber(200)
-			.userId("seokang")
-			.password("tjrkd")
-			.build();
-
 		final Member member = Member.builder()
 			.username("홍길동")
 			.userId("hong")
@@ -167,11 +148,10 @@ class MemberRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
-			.academy(academy)
+			.academy(ACADEMY)
 			.build();
 
 		// when
-		academyRepository.save(academy);
 		memberRepository.save(member);
 	    memberRepository.deleteByUserId("hong");
 		Member result = memberRepository.findByUserId("hong");

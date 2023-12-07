@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -61,7 +63,7 @@ class AcademyRepositoryTest {
 
 		// when
 		academyRepository.save(academy);
-		final Academy result = academyRepository.findByUserId("seokang");
+		final Academy result = academyRepository.findByUserId("seokang").get();
 
 		// then
 		assertThat(result.getId()).isNotNull();
@@ -115,9 +117,9 @@ class AcademyRepositoryTest {
 		// when
 		academyRepository.save(academy);
 		academyRepository.deleteByUserId("seokang");
-		Academy result = academyRepository.findByUserId("seokang");
+		Optional<Academy> result = academyRepository.findByUserId("seokang");
 
 		// then
-		assertThat(result).isNull();
+		assertThrows(NoSuchElementException.class, () -> result.get());
 	}
 }

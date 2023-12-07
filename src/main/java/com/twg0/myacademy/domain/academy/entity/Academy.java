@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.member.entity.Member;
 
@@ -64,11 +65,22 @@ public class Academy extends BaseEntity {
 	@OneToMany(mappedBy = "academy")
 	private List<Member> members = new ArrayList<>();
 
+	@OneToMany(mappedBy = "academy")
+	private List<Classes> classes = new ArrayList<>();
+
 	public void addMembers(Member member) {
 		this.members.add(member);
 	}
 
 	public void removeMembers(Member member) {
 		this.members.remove(member);
+	}
+
+	public void addClasses(Classes classes) {
+		this.classes.add(classes);
+	}
+
+	public void removeClasses(Classes classes) {
+		this.classes.remove(classes);
 	}
 }

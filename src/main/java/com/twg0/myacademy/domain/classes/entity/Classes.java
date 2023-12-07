@@ -3,13 +3,18 @@ package com.twg0.myacademy.domain.classes.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
+import com.twg0.myacademy.domain.exam.entity.Exam;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -36,6 +41,13 @@ public class Classes extends BaseEntity {
 	}
 
 	/* 연관관계 설정 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "academy_id")
+	private Academy academy;
+
+	@OneToMany(mappedBy = "classes")
+	private List<Exam> exams = new ArrayList<>();
+
 	@OneToMany(mappedBy = "classes")
 	private List<MemberClasses> memberClasses = new ArrayList<>();
 

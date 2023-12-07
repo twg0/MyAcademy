@@ -10,6 +10,8 @@ import java.time.OffsetTime;
 import java.time.Year;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
@@ -95,7 +97,7 @@ class MemberRepositoryTest {
 
 		// when
 		memberRepository.save(member);
-		Member result = memberRepository.findByUserId("hong");
+		final Member result = memberRepository.findByUserId("hong").get();
 
 		// then
 		assertThat(result.getId()).isNotNull();
@@ -154,8 +156,8 @@ class MemberRepositoryTest {
 		// when
 		memberRepository.save(member);
 	    memberRepository.deleteByUserId("hong");
-		Member result = memberRepository.findByUserId("hong");
+		Optional<Member> result = memberRepository.findByUserId("hong");
 		// then
-	    assertThat(result).isNull();
+		assertThrows(NoSuchElementException.class, ()->result.get());
 	}
 }

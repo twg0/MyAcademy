@@ -1,5 +1,7 @@
 package com.twg0.myacademy.domain.classes.entity;
 
+import java.util.Objects;
+
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.member.entity.Member;
 
@@ -42,5 +44,22 @@ public class MemberClasses extends BaseEntity {
 	public MemberClasses(Member member, Classes classes) {
 		this.member = member;
 		this.classes = classes;
+	}
+
+	/* Override */
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		MemberClasses that = (MemberClasses)o;
+		return member.equals(that.member) && classes.equals(that.classes);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(member, classes);
 	}
 }

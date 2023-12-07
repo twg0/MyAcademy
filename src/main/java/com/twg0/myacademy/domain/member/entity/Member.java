@@ -3,6 +3,7 @@ package com.twg0.myacademy.domain.member.entity;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.classes.entity.Classes;
@@ -33,11 +34,11 @@ public class Member extends BaseEntity {
 	@Column(name = "member_id")
 	private Long id;
 
-	@Column(nullable = false, length = 20)
-	private String username;
-
 	@Column(nullable = false, unique = true, length = 20)
 	private String userId;
+
+	@Column(nullable = false, length = 20)
+	private String username;
 
 	@Column(nullable = false, length = 20)
 	private String password;
@@ -88,5 +89,22 @@ public class Member extends BaseEntity {
 
 	public void removeGrades(Grade grade) {
 		this.grades.remove(grade);
+	}
+
+	/* Override */
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Member member = (Member)o;
+		return id.equals(member.id) && userId.equals(member.userId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId);
 	}
 }

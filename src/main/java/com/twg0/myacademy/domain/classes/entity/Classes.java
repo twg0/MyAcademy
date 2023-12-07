@@ -2,6 +2,7 @@ package com.twg0.myacademy.domain.classes.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
@@ -29,15 +30,25 @@ public class Classes extends BaseEntity {
 	@Column(name = "classes_id")
 	private Long id;
 
-	private String subject;
+	@Column(unique = true, nullable = false)
 	private String className;
+
+	@Column(nullable = false)
+	private String subject;
+
+	@Column(nullable = false)
+	private String teacher;
+
+	@Column(nullable = false)
 	private Integer countOfStudent;
 
 	@Builder
-	public Classes(String subject, String className, Integer countOfStudent) {
+	public Classes(String subject, String className, String teacher, Integer countOfStudent, Academy academy) {
 		this.subject = subject;
 		this.className = className;
+		this.teacher = teacher;
 		this.countOfStudent = countOfStudent;
+		this.academy = academy;
 	}
 
 	/* 연관관계 설정 */
@@ -57,5 +68,23 @@ public class Classes extends BaseEntity {
 
 	public void removeMemberClasses(MemberClasses memberClasses) {
 		this.memberClasses.remove(memberClasses);
+	}
+
+	/* Override */
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Classes classes = (Classes)o;
+		return id.equals(classes.id) && subject.equals(classes.subject) && className.equals(classes.className)
+			&& teacher.equals(classes.teacher) && countOfStudent.equals(classes.countOfStudent);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(className);
 	}
 }

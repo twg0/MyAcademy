@@ -2,6 +2,7 @@ package com.twg0.myacademy.domain.academy.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -82,5 +83,22 @@ public class Academy extends BaseEntity {
 
 	public void removeClasses(Classes classes) {
 		this.classes.remove(classes);
+	}
+
+	/* Override */
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Academy academy = (Academy)o;
+		return id.equals(academy.id) && userId.equals(academy.userId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId);
 	}
 }

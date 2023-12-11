@@ -29,12 +29,20 @@ public class Exam extends BaseEntity {
 	@Column(name = "exam_id")
 	private Long id;
 
+	@Column(unique = true)
+	private String dateName;
+
+	@Column(length = 30)
 	private String name;
+
 	private Instant date;
+
+	@Column(length = 9)
 	private Integer countOfStudent;
 
 	@Builder
 	public Exam(String name, Instant date, Integer countOfStudent, Classes classes) {
+		this.dateName = date.getNano() + name;
 		this.name = name;
 		this.date = date;
 		this.countOfStudent = countOfStudent;

@@ -4,13 +4,17 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -37,6 +41,10 @@ public class Exam extends BaseEntity {
 	}
 
 	/* 연관관계 설정 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "classes_id", nullable = false)
+	private Classes classes;
+
 	@OneToMany(mappedBy = "exam")
 	private List<Grade> grades = new ArrayList<>();
 }

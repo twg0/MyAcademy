@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;
-import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.classes.entity.MemberClasses;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.exam.entity.Grade;

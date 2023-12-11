@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
 import com.twg0.myacademy.domain.classes.entity.Classes;
-import com.twg0.myacademy.domain.classes.entity.MemberClasses;
-import com.twg0.myacademy.domain.member.entity.Member;
-import com.twg0.myacademy.domain.member.repository.MemberRepository;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

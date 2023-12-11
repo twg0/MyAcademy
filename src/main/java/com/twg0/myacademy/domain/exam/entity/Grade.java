@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Grade extends BaseEntity {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "grade_id")
+	@Column(name = "grades_id")
 	private Long id;
 
 	@Column(unique = true)

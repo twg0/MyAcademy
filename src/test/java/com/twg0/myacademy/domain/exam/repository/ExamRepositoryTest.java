@@ -1,6 +1,7 @@
 package com.twg0.myacademy.domain.exam.repository;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
@@ -75,7 +77,8 @@ class ExamRepositoryTest {
 		Exam result = examRepository.save(exam);
 		// then
 		assertThat(result.getId()).isNotNull();
-		assertThat(result.getDate()).isEqualTo(exam.getDate());
+		assertThat(result.getDateName()).isEqualTo(exam.getDateName());
+		assertThat(result.getName()).isEqualTo(exam.getName());
 		assertThat(result.getDate()).isEqualTo(exam.getDate());
 		assertThat(result.getClasses()).isEqualTo(exam.getClasses());
 		assertThat(result.getCountOfStudent()).isEqualTo(exam.getCountOfStudent());
@@ -92,12 +95,35 @@ class ExamRepositoryTest {
 			.build();
 		// when
 		examRepository.save(exam);
-		Exam result = examRepository.findByNameAndDate(exam.getName(), DATE).get();
+		Exam result = examRepository.findByDateName(exam.getDateName()).get();
 		// then
 		assertThat(result.getId()).isNotNull();
-		assertThat(result.getDate()).isEqualTo(exam.getDate());
+		assertThat(result.getDateName()).isEqualTo(exam.getDateName());
+		assertThat(result.getName()).isEqualTo(exam.getName());
 		assertThat(result.getDate()).isEqualTo(exam.getDate());
 		assertThat(result.getClasses()).isEqualTo(exam.getClasses());
 		assertThat(result.getCountOfStudent()).isEqualTo(exam.getCountOfStudent());
+	}
+
+	@Test
+	public void 시험중복테스트() throws Exception {
+		// given
+		final Exam exam1 = Exam.builder()
+			.name("주간테스트")
+			.date(DATE)
+			.countOfStudent(30)
+			.classes(CLASSES)
+			.build();
+
+		final Exam exam2 = Exam.builder()
+			.name("주간테스트")
+			.date(DATE)
+			.countOfStudent(30)
+			.classes(CLASSES)
+			.build();
+	    // when
+		examRepository.save(exam1);
+	    // then
+		assertThrows(DataIntegrityViolationException.class, () -> examRepository.save(exam2));
 	}
 }

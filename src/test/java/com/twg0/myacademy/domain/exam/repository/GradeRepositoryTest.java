@@ -7,6 +7,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -177,5 +179,24 @@ class GradeRepositoryTest {
 		gradeRepository.save(grade1);
 	    // then
 		assertThrows(DataIntegrityViolationException.class, () -> gradeRepository.save(grade2));
+	}
+
+	@Test
+	public void 성적삭제테스트() throws Exception {
+		final Grade grade = Grade.builder()
+			.score("{"
+				+ "국어:90,"
+				+ "수1:85,"
+				+ "영어:80"
+				+ "}")
+			.member(MEMBER)
+			.exam(EXAM)
+			.build();
+	    // then
+		gradeRepository.save(grade);
+		gradeRepository.deleteByMemberExam(grade.getMemberExam());
+		Optional<Grade> result = gradeRepository.findByMemberExam(grade.getMemberExam());
+		// when
+		assertThrows(NoSuchElementException.class, ()->result.get());
 	}
 }

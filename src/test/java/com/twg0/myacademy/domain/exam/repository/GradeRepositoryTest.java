@@ -1,6 +1,7 @@
 package com.twg0.myacademy.domain.exam.repository;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
@@ -149,4 +151,31 @@ class GradeRepositoryTest {
 		assertThat(grades.contains(grade)).isTrue();
 	}
 
+	@Test
+	public void 성적중복테스트() throws Exception {
+		// given
+		final Grade grade1 = Grade.builder()
+			.score("{"
+				+ "국어:90,"
+				+ "수1:85,"
+				+ "영어:80"
+				+ "}")
+			.member(MEMBER)
+			.exam(EXAM)
+			.build();
+
+		final Grade grade2 = Grade.builder()
+			.score("{"
+				+ "국어:90,"
+				+ "수1:85,"
+				+ "영어:80"
+				+ "}")
+			.member(MEMBER)
+			.exam(EXAM)
+			.build();
+		// when
+		gradeRepository.save(grade1);
+	    // then
+		assertThrows(DataIntegrityViolationException.class, () -> gradeRepository.save(grade2));
+	}
 }

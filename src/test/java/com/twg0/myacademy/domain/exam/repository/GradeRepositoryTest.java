@@ -1,10 +1,14 @@
 package com.twg0.myacademy.domain.exam.repository;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -15,6 +19,7 @@ import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
 import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.classes.repository.ClassesRepository;
 import com.twg0.myacademy.domain.exam.entity.Exam;
+import com.twg0.myacademy.domain.exam.entity.Grade;
 import com.twg0.myacademy.domain.member.entity.Member;
 import com.twg0.myacademy.domain.member.repository.MemberRepository;
 
@@ -85,4 +90,23 @@ class GradeRepositoryTest {
 		EXAM = examRepository.save(exam);
 	}
 
+	@Test
+	public void 성적등록테스트() throws Exception {
+	    // given
+		final Grade grade = Grade.builder()
+			.score("{"
+				+ "국어:90,"
+				+ "수1:85,"
+				+ "영어:80"
+				+ "}")
+			.member(MEMBER)
+			.exam(EXAM)
+			.build();
+	    // when
+		Grade result = gradeRepository.save(grade);
+		// then
+		assertThat(result.getId()).isNotNull();
+		assertThat(result.getScore()).isEqualTo(grade.getScore());
+		assertThat(result.getMemberExam()).isEqualTo(grade.getMemberExam());
+	}
 }

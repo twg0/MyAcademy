@@ -13,9 +13,11 @@ import com.twg0.myacademy.domain.member.entity.Member;
 @Repository
 public interface GradeRepository extends JpaRepository<Grade, Long> {
 
-	Optional<Grade> findById(Long id);
+	Optional<Grade> findByMemberExam(String memberExam);
 
 	List<Grade> findAllByMember(Member member);
 
 	List<Grade> findAllByExam(Exam exam);
+
+	void deleteByMemberExam(String memberExam);
 }

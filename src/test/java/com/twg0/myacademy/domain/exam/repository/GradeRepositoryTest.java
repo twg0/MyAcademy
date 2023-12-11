@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -109,4 +110,43 @@ class GradeRepositoryTest {
 		assertThat(result.getScore()).isEqualTo(grade.getScore());
 		assertThat(result.getMemberExam()).isEqualTo(grade.getMemberExam());
 	}
+
+	@Test
+	public void 멤버기준성적조회테스트() throws Exception {
+		// given
+		final Grade grade = Grade.builder()
+			.score("{"
+				+ "국어:90,"
+				+ "수1:85,"
+				+ "영어:80"
+				+ "}")
+			.member(MEMBER)
+			.exam(EXAM)
+			.build();
+		// when
+		gradeRepository.save(grade);
+		List<Grade> grades = gradeRepository.findAllByMember(MEMBER);
+		// then
+		assertThat(grades.contains(grade)).isTrue();
+	}
+
+	@Test
+	public void 시험기준성적조회테스트() throws Exception {
+		// given
+		final Grade grade = Grade.builder()
+			.score("{"
+				+ "국어:90,"
+				+ "수1:85,"
+				+ "영어:80"
+				+ "}")
+			.member(MEMBER)
+			.exam(EXAM)
+			.build();
+		// when
+		gradeRepository.save(grade);
+		List<Grade> grades = gradeRepository.findAllByExam(EXAM);
+		// then
+		assertThat(grades.contains(grade)).isTrue();
+	}
+
 }

@@ -1,6 +1,5 @@
 package com.twg0.myacademy.domain.exam.repository;
 
-import java.time.Instant;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -12,4 +12,6 @@ import com.twg0.myacademy.domain.exam.entity.Exam;
 public interface ExamRepository extends JpaRepository<Exam, Long> {
 
 	Optional<Exam> findByDateName(String dateName);
+
+	void deleteByDateName(String dateName);
 }

@@ -34,10 +34,11 @@ public class Exam extends BaseEntity {
 	private Integer countOfStudent;
 
 	@Builder
-	public Exam(String name, Instant date, Integer countOfStudent) {
+	public Exam(String name, Instant date, Integer countOfStudent, Classes classes) {
 		this.name = name;
 		this.date = date;
 		this.countOfStudent = countOfStudent;
+		this.classes = classes;
 	}
 
 	/* 연관관계 설정 */

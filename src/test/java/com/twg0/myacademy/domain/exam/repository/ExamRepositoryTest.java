@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,6 +73,26 @@ class ExamRepositoryTest {
 			.build();
 	    // when
 		Exam result = examRepository.save(exam);
+		// then
+		assertThat(result.getId()).isNotNull();
+		assertThat(result.getDate()).isEqualTo(exam.getDate());
+		assertThat(result.getDate()).isEqualTo(exam.getDate());
+		assertThat(result.getClasses()).isEqualTo(exam.getClasses());
+		assertThat(result.getCountOfStudent()).isEqualTo(exam.getCountOfStudent());
+	}
+
+	@Test
+	public void 시험조회테스트() throws Exception {
+		// given
+		final Exam exam = Exam.builder()
+			.name("주간테스트")
+			.date(DATE)
+			.countOfStudent(30)
+			.classes(CLASSES)
+			.build();
+		// when
+		examRepository.save(exam);
+		Exam result = examRepository.findByNameAndDate(exam.getName(), DATE).get();
 		// then
 		assertThat(result.getId()).isNotNull();
 		assertThat(result.getDate()).isEqualTo(exam.getDate());

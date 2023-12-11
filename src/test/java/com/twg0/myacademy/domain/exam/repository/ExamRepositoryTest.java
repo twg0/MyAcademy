@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
@@ -125,5 +126,22 @@ class ExamRepositoryTest {
 		examRepository.save(exam1);
 	    // then
 		assertThrows(DataIntegrityViolationException.class, () -> examRepository.save(exam2));
+	}
+
+	@Test
+	public void 시험삭제테스트() throws Exception {
+		// given
+		final Exam exam = Exam.builder()
+			.name("주간테스트")
+			.date(DATE)
+			.countOfStudent(30)
+			.classes(CLASSES)
+			.build();
+		// when
+		examRepository.save(exam);
+		examRepository.deleteByDateName(exam.getDateName());
+		Optional<Exam> result = examRepository.findByDateName(exam.getDateName());
+		// then
+		assertThrows(NoSuchElementException.class, () -> result.get());
 	}
 }

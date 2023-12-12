@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.twg0.myacademy.domain.academy.DTO.AcademyDTO;
 import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.member.entity.Member;
@@ -18,11 +19,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Academy extends BaseEntity {
 
@@ -62,6 +65,15 @@ public class Academy extends BaseEntity {
 		this.members = members;
 	}
 
+	/* 메소드 */
+	public Academy updateInfo(AcademyDTO academyDTO) {
+		this.name = academyDTO.getName();
+		this.phoneNumber = academyDTO.getPhoneNumber();
+		this.address = academyDTO.getAddress();
+		this.studentNumber = academyDTO.getStudentNumber();
+		return this;
+	}
+
 	/* 연관관계 필요 */
 	@OneToMany(mappedBy = "academy")
 	private List<Member> members = new ArrayList<>();
@@ -83,22 +95,5 @@ public class Academy extends BaseEntity {
 
 	public void removeClasses(Classes classes) {
 		this.classes.remove(classes);
-	}
-
-	/* Override */
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Academy academy = (Academy)o;
-		return id.equals(academy.id) && userId.equals(academy.userId);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(userId);
 	}
 }

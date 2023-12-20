@@ -9,9 +9,12 @@ import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.classes.entity.MemberClasses;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.exam.entity.Grade;
+import com.twg0.myacademy.domain.member.enums.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -51,15 +54,20 @@ public class Member extends BaseEntity {
 	@Column(nullable = false, length = 20)
 	private Integer age;
 
+	@Enumerated(value = EnumType.STRING)
+	@Column(nullable = false)
+	private Role role;
+
 	@Builder
-	public Member(String username, String userId, String password, Instant birth, String school, Integer age,
+	public Member(String userId, String username, String password, Instant birth, String school, Integer age, Role role,
 		Academy academy) {
-		this.username = username;
 		this.userId = userId;
+		this.username = username;
 		this.password = password;
 		this.birth = birth;
 		this.school = school;
 		this.age = age;
+		this.role = role;
 		this.academy = academy;
 	}
 

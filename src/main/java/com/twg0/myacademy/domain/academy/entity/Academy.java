@@ -2,11 +2,11 @@ package com.twg0.myacademy.domain.academy.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import com.twg0.myacademy.domain.academy.DTO.AcademyDTO;
+import com.twg0.myacademy.domain.academy.DTO.AcademyRequest;
+import com.twg0.myacademy.domain.academy.DTO.AcademyResponse;
 import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.member.entity.Member;
@@ -66,12 +66,12 @@ public class Academy extends BaseEntity {
 	}
 
 	/* 메소드 */
-	public Academy updateInfo(AcademyDTO academyDTO) {
-		this.name = academyDTO.getName();
-		this.phoneNumber = academyDTO.getPhoneNumber();
-		this.address = academyDTO.getAddress();
-		this.studentNumber = academyDTO.getStudentNumber();
-		return this;
+	public AcademyResponse updateInfo(AcademyRequest academyRequest) {
+		this.name = academyRequest.getName();
+		this.phoneNumber = academyRequest.getPhoneNumber();
+		this.address = academyRequest.getAddress();
+		this.studentNumber = academyRequest.getStudentNumber();
+		return AcademyResponse.fromEntity(this);
 	}
 
 	/* 연관관계 필요 */

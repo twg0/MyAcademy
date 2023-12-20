@@ -19,6 +19,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
 import com.twg0.myacademy.domain.member.entity.Member;
+import com.twg0.myacademy.domain.member.enums.Role;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -59,6 +60,7 @@ class MemberRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
+			.role(Role.MEMBER)
 			.academy(ACADEMY)
 			.build();
 
@@ -86,6 +88,7 @@ class MemberRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
+			.role(Role.MEMBER)
 			.academy(ACADEMY)
 			.build();
 
@@ -114,6 +117,7 @@ class MemberRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
+			.role(Role.MEMBER)
 			.academy(ACADEMY)
 			.build();
 
@@ -144,6 +148,7 @@ class MemberRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
+			.role(Role.MEMBER)
 			.academy(ACADEMY)
 			.build();
 

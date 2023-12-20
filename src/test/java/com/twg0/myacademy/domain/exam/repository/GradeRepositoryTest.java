@@ -24,6 +24,7 @@ import com.twg0.myacademy.domain.classes.repository.ClassesRepository;
 import com.twg0.myacademy.domain.exam.entity.Exam;
 import com.twg0.myacademy.domain.exam.entity.Grade;
 import com.twg0.myacademy.domain.member.entity.Member;
+import com.twg0.myacademy.domain.member.enums.Role;
 import com.twg0.myacademy.domain.member.repository.MemberRepository;
 
 @DataJpaTest
@@ -69,6 +70,7 @@ class GradeRepositoryTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
+			.role(Role.MEMBER)
 			.academy(ACADEMY)
 			.build();
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;
+import com.twg0.myacademy.domain.classes.DTO.ClassesRequest;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.exam.entity.Exam;
 
@@ -49,6 +50,13 @@ public class Classes extends BaseEntity {
 		this.teacher = teacher;
 		this.countOfStudent = countOfStudent;
 		this.academy = academy;
+	}
+
+	public void updateInfo(ClassesRequest classesRequest) {
+		this.className = classesRequest.getClassName();
+		this.subject = classesRequest.getSubject();
+		this.teacher = classesRequest.getTeacher();
+		this.countOfStudent = classesRequest.getCountOfStudent();
 	}
 
 	/* 연관관계 설정 */

@@ -25,6 +25,8 @@ public class ClassesService {
 
 	@Transactional
 	public ClassesResponse create(ClassesRequest classesRequest, String academyUserId) {
+		if(classesRepository.existsByClassName(classesRequest.getClassName()))
+			throw new IllegalArgumentException("반 이름이 이미 존재합니다.");
 		Academy academy = academyRepository.findByUserId(academyUserId).get();
 		classesRequest.setAcademy(academy);
 		Classes classes = classesRequest.toEntity();

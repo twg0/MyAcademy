@@ -34,7 +34,7 @@ public class ClassesService {
 
 	@Transactional
 	public ClassesResponse updateInfo(String className, ClassesRequest classesRequest) {
-		if(classesRepository.existsByClassName(className))
+		if(classesRepository.existsByClassName(classesRequest.getClassName()))
 			throw new IllegalArgumentException("반 이름이 이미 존재합니다.");
 		Classes classes = classesRepository.findByClassName(className).get();
 		classes.updateInfo(classesRequest);

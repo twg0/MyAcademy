@@ -32,4 +32,14 @@ public class MemberService {
 		Member member = memberRepository.save(memberRequest.toEntity());
 		return MemberResponse.fromEntity(member);
 	}
+
+	@Transactional
+	public MemberResponse updateInfo(MemberRequest memberRequest, String userId) {
+		if(memberRepository.existsByUserId(memberRequest.getUserId())) {
+			throw new IllegalArgumentException("ID가 이미 존재합니다.");
+		}
+		Member member = memberRepository.findByUserId(userId).get();
+		member.updateInfo(memberRequest);
+		return MemberResponse.fromEntity(member);
+	}
 }

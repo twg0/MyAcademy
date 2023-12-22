@@ -1,6 +1,7 @@
 package com.twg0.myacademy.domain.exam.entity;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +36,13 @@ public class Exam extends BaseEntity {
 	@Column(length = 30)
 	private String name;
 
-	private Instant date;
+	private LocalDateTime date;
 
 	@Column(length = 9)
 	private Integer countOfStudent;
 
 	@Builder
-	public Exam(String name, Instant date, Integer countOfStudent, Classes classes) {
+	public Exam(String name, LocalDateTime date, Integer countOfStudent, Classes classes) {
 		this.dateName = date.getNano() + name;
 		this.name = name;
 		this.date = date;

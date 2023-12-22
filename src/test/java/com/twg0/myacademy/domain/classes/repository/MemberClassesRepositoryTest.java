@@ -40,7 +40,7 @@ class MemberClassesRepositoryTest {
 
 	private Academy ACADEMY;
 	private Member MEMBER;
-	private Instant BIRTH;
+	private LocalDateTime BIRTH;
 	private Classes CLASSES;
 	@BeforeEach
 	public void setUp() {
@@ -54,7 +54,7 @@ class MemberClassesRepositoryTest {
 			.build();
 		ACADEMY = academyRepository.save(academy);
 
-		BIRTH = LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toInstant();
+		BIRTH = LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
 
 		final Member member = Member.builder()
 			.username("홍길동")

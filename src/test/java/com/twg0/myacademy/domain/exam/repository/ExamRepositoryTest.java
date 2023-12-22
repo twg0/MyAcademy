@@ -35,7 +35,7 @@ class ExamRepositoryTest {
 
 	private Academy ACADEMY;
 	private Classes CLASSES;
-	private Instant DATE;
+	private LocalDateTime DATE;
 
 	@BeforeEach
 	public void setUp() {
@@ -49,7 +49,7 @@ class ExamRepositoryTest {
 			.build();
 		ACADEMY = academyRepository.save(academy);
 
-		DATE = LocalDateTime.of(2023, 11, 11, 15, 30).atZone(ZoneId.of("Asia/Seoul")).toInstant();
+		DATE = LocalDateTime.of(2023, 11, 11, 15, 30).atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
 
 		final Classes classes = Classes.builder()
 			.subject("수학")

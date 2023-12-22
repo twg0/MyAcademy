@@ -33,7 +33,7 @@ class MemberRepositoryTest {
 
 	private Academy ACADEMY;
 
-	private Instant BIRTH;
+	private LocalDateTime BIRTH;
 
 	@BeforeEach
 	public void setUp() {
@@ -47,7 +47,7 @@ class MemberRepositoryTest {
 			.build();
 		ACADEMY = academy;
 		academyRepository.save(academy);
-		BIRTH = LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toInstant();
+		BIRTH = LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
 	}
 
 	@Test

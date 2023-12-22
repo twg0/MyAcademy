@@ -1,6 +1,7 @@
 package com.twg0.myacademy.domain.member.entity;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +47,7 @@ public class Member extends BaseEntity {
 	private String password;
 
 	@Column(nullable = false, length = 20)
-	private Instant birth;
+	private LocalDateTime birth;
 
 	@Column(length = 20)
 	private String school;
@@ -59,7 +60,7 @@ public class Member extends BaseEntity {
 	private Role role;
 
 	@Builder
-	public Member(String userId, String username, String password, Instant birth, String school, Integer age, Role role,
+	public Member(String userId, String username, String password, LocalDateTime birth, String school, Integer age, Role role,
 		Academy academy) {
 		this.userId = userId;
 		this.username = username;

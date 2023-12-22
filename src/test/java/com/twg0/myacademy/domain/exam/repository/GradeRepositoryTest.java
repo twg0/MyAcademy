@@ -44,10 +44,10 @@ class GradeRepositoryTest {
 
 	private Academy ACADEMY;
 	private Member MEMBER;
-	private Instant BIRTH;
+	private LocalDateTime BIRTH;
 	private Classes CLASSES;
 	private Exam EXAM;
-	private Instant DATE;
+	private LocalDateTime DATE;
 	@BeforeEach
 	public void setUp() {
 		final Academy academy = Academy.builder()
@@ -60,8 +60,8 @@ class GradeRepositoryTest {
 			.build();
 		ACADEMY = academyRepository.save(academy);
 
-		BIRTH = LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toInstant();
-		DATE = LocalDateTime.of(2023, 11, 11, 15, 30).atZone(ZoneId.of("Asia/Seoul")).toInstant();
+		BIRTH = LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
+		DATE = LocalDateTime.of(2023, 11, 11, 15, 30).atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
 
 		final Member member = Member.builder()
 			.username("홍길동")

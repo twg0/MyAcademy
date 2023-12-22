@@ -103,4 +103,49 @@ class MemberServiceTest {
 		assertThat(result.getBirth()).isEqualTo(memberRequest2.getBirth());
 		assertThat(result.getSchool()).isEqualTo(memberRequest2.getSchool());
 	}
+
+	@Test
+	public void 멤버조회() throws Exception {
+	    // given
+		final MemberRequest memberRequest = MemberRequest.builder()
+			.username("홍길동")
+			.userId("hong")
+			.password("gildong")
+			.age(18)
+			.birth(BIRTH)
+			.school("방산")
+			.role(Role.MEMBER)
+			.academy(ACADEMY)
+			.build();
+	    // when
+		memberService.create(memberRequest, ACADEMY.getUserId());
+		MemberResponse result = memberService.read(memberRequest.getUserId());
+		// then
+		assertThat(result.getUsername()).isEqualTo(memberRequest.getUsername());
+		assertThat(result.getUserId()).isEqualTo(memberRequest.getUserId());
+		assertThat(result.getAge()).isEqualTo(memberRequest.getAge());
+		assertThat(result.getBirth()).isEqualTo(memberRequest.getBirth());
+		assertThat(result.getSchool()).isEqualTo(memberRequest.getSchool());
+	}
+
+	@Test
+	public void 멤버삭제() throws Exception {
+	    // given
+		final MemberRequest memberRequest = MemberRequest.builder()
+			.username("홍길동")
+			.userId("hong")
+			.password("gildong")
+			.age(18)
+			.birth(BIRTH)
+			.school("방산")
+			.role(Role.MEMBER)
+			.academy(ACADEMY)
+			.build();
+	    // when
+		memberService.create(memberRequest, ACADEMY.getUserId());
+		memberService.delete(memberRequest.getUserId());
+	    // then
+		assertThrows(IllegalArgumentException.class, () ->
+			memberService.read(memberRequest.getUserId()));
+	}
 }

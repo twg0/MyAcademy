@@ -8,7 +8,6 @@ import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
 import com.twg0.myacademy.domain.member.DTO.MemberRequest;
 import com.twg0.myacademy.domain.member.DTO.MemberResponse;
 import com.twg0.myacademy.domain.member.entity.Member;
-import com.twg0.myacademy.domain.member.enums.Role;
 import com.twg0.myacademy.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;

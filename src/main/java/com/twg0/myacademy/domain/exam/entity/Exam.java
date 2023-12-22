@@ -1,6 +1,5 @@
 package com.twg0.myacademy.domain.exam.entity;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

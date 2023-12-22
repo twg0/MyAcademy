@@ -1,6 +1,5 @@
 package com.twg0.myacademy.domain.member.DTO;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;

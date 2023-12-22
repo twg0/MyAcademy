@@ -1,6 +1,5 @@
 package com.twg0.myacademy.domain.member.entity;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,6 @@ import com.twg0.myacademy.domain.classes.entity.MemberClasses;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.exam.entity.Grade;
 import com.twg0.myacademy.domain.member.DTO.MemberRequest;
-import com.twg0.myacademy.domain.member.DTO.MemberResponse;
 import com.twg0.myacademy.domain.member.enums.Role;
 
 import jakarta.persistence.Column;

@@ -2,7 +2,6 @@ package com.twg0.myacademy.domain.classes.DTO;
 
 import com.twg0.myacademy.domain.classes.entity.Classes;
 
-import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Data;
 

@@ -42,4 +42,20 @@ public class MemberService {
 		member.updateInfo(memberRequest);
 		return MemberResponse.fromEntity(member);
 	}
+
+	@Transactional
+	public void delete(String userId) {
+		if(!memberRepository.existsByUserId(userId)) {
+			throw new IllegalArgumentException("ID가 존재하지 않습니다.");
+		}
+		memberRepository.deleteByUserId(userId);
+	}
+
+	public MemberResponse read(String userId) {
+		if(!memberRepository.existsByUserId(userId)) {
+			throw new IllegalArgumentException("ID가 존재하지 않습니다.");
+		}
+		Member member = memberRepository.findByUserId(userId).get();
+		return MemberResponse.fromEntity(member);
+	}
 }

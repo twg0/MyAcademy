@@ -69,4 +69,38 @@ class MemberServiceTest {
 		assertThat(result.getBirth()).isEqualTo(memberRequest.getBirth());
 		assertThat(result.getSchool()).isEqualTo(memberRequest.getSchool());
 	}
+
+	@Test
+	public void 멤버수정() throws Exception {
+	    // given
+		final MemberRequest memberRequest = MemberRequest.builder()
+			.username("홍길동")
+			.userId("hong")
+			.password("gildong")
+			.age(18)
+			.birth(BIRTH)
+			.school("방산")
+			.role(Role.MEMBER)
+			.academy(ACADEMY)
+			.build();
+		final MemberRequest memberRequest2 = MemberRequest.builder()
+			.username("고길동")
+			.userId("go")
+			.password("gildong")
+			.age(18)
+			.birth(BIRTH)
+			.school("오금")
+			.role(Role.MEMBER)
+			.academy(ACADEMY)
+			.build();
+	    // when
+		memberService.create(memberRequest, ACADEMY.getUserId());
+		MemberResponse result = memberService.updateInfo(memberRequest2, memberRequest.getUserId());
+		// then
+		assertThat(result.getUsername()).isEqualTo(memberRequest2.getUsername());
+		assertThat(result.getUserId()).isEqualTo(memberRequest2.getUserId());
+		assertThat(result.getAge()).isEqualTo(memberRequest2.getAge());
+		assertThat(result.getBirth()).isEqualTo(memberRequest2.getBirth());
+		assertThat(result.getSchool()).isEqualTo(memberRequest2.getSchool());
+	}
 }

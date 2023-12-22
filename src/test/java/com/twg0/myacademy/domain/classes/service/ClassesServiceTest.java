@@ -19,7 +19,6 @@ import com.twg0.myacademy.domain.classes.entity.Classes;
 
 @SpringBootTest
 @Transactional
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ClassesServiceTest {
 	@Autowired
 	private ClassesService classesService;

@@ -10,6 +10,8 @@ import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.classes.entity.MemberClasses;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.exam.entity.Grade;
+import com.twg0.myacademy.domain.member.DTO.MemberRequest;
+import com.twg0.myacademy.domain.member.DTO.MemberResponse;
 import com.twg0.myacademy.domain.member.enums.Role;
 
 import jakarta.persistence.Column;
@@ -58,6 +60,17 @@ public class Member extends BaseEntity {
 	@Enumerated(value = EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
+
+	public void updateInfo(MemberRequest memberRequest) {
+		this.userId = memberRequest.getUserId();
+		this.username = memberRequest.getUsername();
+		this.password = memberRequest.getPassword();
+		this.birth = memberRequest.getBirth();
+		this.school = memberRequest.getSchool();
+		this.age = memberRequest.getAge();
+		this.role = memberRequest.getRole();
+		this.academy = memberRequest.getAcademy();
+	}
 
 	@Builder
 	public Member(String userId, String username, String password, LocalDateTime birth, String school, Integer age, Role role,

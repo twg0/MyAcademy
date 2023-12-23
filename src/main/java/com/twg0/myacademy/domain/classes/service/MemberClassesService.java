@@ -1,5 +1,7 @@
 package com.twg0.myacademy.domain.classes.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,5 +48,21 @@ public class MemberClassesService {
 		if(!memberClassesRepository.existsByMemberAndClasses(member, classes))
 			throw new IllegalArgumentException("해당 반을 수강 중이지 않습니다.");
 		memberClassesRepository.deleteByMemberAndClasses(member,classes);
+	}
+
+	public List<MemberClassesDTO> readAllByMember(String memberUserId) {
+		if(!memberRepository.existsByUserId(memberUserId))
+			throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
+		Member member = memberRepository.findByUserId(memberUserId).get();
+		List<MemberClasses> memberClassesList = memberClassesRepository.findByMember(member);
+		return memberClassesList.stream().map(MemberClassesDTO::fromEntity).toList();
+	}
+
+	public List<MemberClassesDTO> readAllByClasses(String className) {
+		if(!classesRepository.existsByClassName(className))
+			throw new IllegalArgumentException("존재하지 않는 반입니다.");
+		Classes classes = classesRepository.findByClassName(className).get();
+		List<MemberClasses> memberClassesList = memberClassesRepository.findByClasses(classes);
+		return memberClassesList.stream().map(MemberClassesDTO::fromEntity).toList();
 	}
 }

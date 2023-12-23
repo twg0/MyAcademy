@@ -38,4 +38,13 @@ public class MemberClassesService {
 		classes.addMemberClasses(save);
 		return dto;
 	}
+
+	@Transactional
+	public void delete(String memberUserId, String className) {
+		Member member = memberRepository.findByUserId(memberUserId).get();
+		Classes classes = classesRepository.findByClassName(className).get();
+		if(!memberClassesRepository.existsByMemberAndClasses(member, classes))
+			throw new IllegalArgumentException("해당 반을 수강 중이지 않습니다.");
+		memberClassesRepository.deleteByMemberAndClasses(member,classes);
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.twg0.myacademy.domain.classes.DTO.MemberClassesDTO;
 import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.classes.entity.MemberClasses;
+import com.twg0.myacademy.domain.classes.entity.MemberClassesID;
 import com.twg0.myacademy.domain.classes.repository.ClassesRepository;
 import com.twg0.myacademy.domain.classes.repository.MemberClassesRepository;
 import com.twg0.myacademy.domain.member.entity.Member;
@@ -47,7 +48,22 @@ public class MemberClassesService {
 		Classes classes = classesRepository.findByClassName(className).get();
 		if(!memberClassesRepository.existsByMemberAndClasses(member, classes))
 			throw new IllegalArgumentException("해당 반을 수강 중이지 않습니다.");
+		MemberClasses memberClasses = memberClassesRepository.findByMemberAndClasses(member, classes).get();
+		member.removeMemberClasses(memberClasses);
+		classes.removeMemberClasses(memberClasses);
 		memberClassesRepository.deleteByMemberAndClasses(member,classes);
+	}
+
+	@Transactional
+	public MemberClassesDTO updateClasses(String memberUserId, String beforeClassName, String afterClassName) {
+		if(!memberRepository.existsByUserId(memberUserId))
+			throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
+		if(!classesRepository.existsByClassName(beforeClassName))
+			throw new IllegalArgumentException("존재하지 않는 반입니다.");
+		if(!classesRepository.existsByClassName(afterClassName))
+			throw new IllegalArgumentException("존재하지 않는 반입니다.");
+		delete(memberUserId, beforeClassName);
+		return create(memberUserId, afterClassName);
 	}
 
 	public List<MemberClassesDTO> readAllByMember(String memberUserId) {

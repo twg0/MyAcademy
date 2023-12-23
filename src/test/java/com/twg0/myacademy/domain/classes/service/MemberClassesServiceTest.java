@@ -40,6 +40,7 @@ class MemberClassesServiceTest {
 	private Member MEMBER;
 	private LocalDateTime BIRTH;
 	private Classes CLASSES;
+	private Classes CLASSES2;
 	@BeforeEach
 	public void setUp() {
 		final Academy academy = Academy.builder()
@@ -73,8 +74,18 @@ class MemberClassesServiceTest {
 			.academy(ACADEMY)
 			.build();
 
+		final Classes classes2 = Classes.builder()
+			.subject("과학")
+			.className("예비고3B")
+			.countOfStudent(0)
+			.teacher("kwon")
+			.academy(ACADEMY)
+			.build();
+
+
 		MEMBER = memberRepository.save(member);
 		CLASSES = classesRepository.save(classes);
+		CLASSES2 = classesRepository.save(classes2);
 	}
 
 	@Test
@@ -124,8 +135,22 @@ class MemberClassesServiceTest {
 		// when
 		List<MemberClassesDTO> list = memberClassesService.readAllByClasses(className);
 		// then
-		assertThat(userId).isEqualTo(list.get(0).getMember().getUserId());
-		assertThat(className).isEqualTo(list.get(0).getClasses().getClassName());
+		assertThat(MEMBER).isEqualTo(list.get(0).getMember());
+		assertThat(CLASSES).isEqualTo(list.get(0).getClasses());
 
+	}
+
+	@Test
+	public void 수강변경() throws Exception {
+	    // given
+		String userId = MEMBER.getUserId();
+		String className = CLASSES.getClassName();
+		String className2 = CLASSES2.getClassName();
+		memberClassesService.create(userId, className);
+		// when
+		MemberClassesDTO result = memberClassesService.updateClasses(userId, className, className2);
+		// then
+		assertThat(result.getMember()).isEqualTo(MEMBER);
+		assertThat(result.getClasses()).isEqualTo(CLASSES2);
 	}
 }

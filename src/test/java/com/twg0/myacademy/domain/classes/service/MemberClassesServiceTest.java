@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -99,5 +100,32 @@ class MemberClassesServiceTest {
 		// then
 		assertThrows(IllegalArgumentException.class, () ->
 			memberClassesService.delete(userId, className));
+	}
+
+	@Test
+	public void 멤버수강내역조회() throws Exception {
+	    // given
+		String userId = MEMBER.getUserId();
+		String className = CLASSES.getClassName();
+		memberClassesService.create(userId, className);
+	    // when
+		List<MemberClassesDTO> list = memberClassesService.readAllByMember(userId);
+		// then
+		assertThat(userId).isEqualTo(list.get(0).getMember().getUserId());
+		assertThat(className).isEqualTo(list.get(0).getClasses().getClassName());
+	}
+
+	@Test
+	public void 반수강자조회() throws Exception {
+		// given
+		String userId = MEMBER.getUserId();
+		String className = CLASSES.getClassName();
+		memberClassesService.create(userId, className);
+		// when
+		List<MemberClassesDTO> list = memberClassesService.readAllByClasses(className);
+		// then
+		assertThat(userId).isEqualTo(list.get(0).getMember().getUserId());
+		assertThat(className).isEqualTo(list.get(0).getClasses().getClassName());
+
 	}
 }

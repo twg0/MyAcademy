@@ -87,4 +87,17 @@ class MemberClassesServiceTest {
 		assertThat(result.getMember()).isEqualTo(MEMBER);
 		assertThat(result.getClasses()).isEqualTo(CLASSES);
 	}
+
+	@Test
+	public void 수강삭제() throws Exception {
+		// given
+		String userId = MEMBER.getUserId();
+		String className = CLASSES.getClassName();
+		// when
+		memberClassesService.create(userId, className);
+		memberClassesService.delete(userId, className);
+		// then
+		assertThrows(IllegalArgumentException.class, () ->
+			memberClassesService.delete(userId, className));
+	}
 }

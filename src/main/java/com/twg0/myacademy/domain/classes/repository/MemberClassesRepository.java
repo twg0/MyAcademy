@@ -20,4 +20,6 @@ public interface MemberClassesRepository extends JpaRepository<MemberClasses, Me
 	List<MemberClasses> findByClasses(Classes classes);
 
 	void deleteByMemberAndClasses(Member member, Classes classes);
+
+	boolean existsByMemberAndClasses(Member member, Classes classes);
 }

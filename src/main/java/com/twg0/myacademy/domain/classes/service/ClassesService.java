@@ -30,6 +30,7 @@ public class ClassesService {
 		Academy academy = academyRepository.findByUserId(academyUserId).get();
 		classesRequest.setAcademy(academy);
 		Classes classes = classesRequest.toEntity();
+		academy.addClasses(classes);
 		classesRepository.save(classes);
 		return ClassesResponse.fromEntity(classes);
 	}
@@ -47,6 +48,8 @@ public class ClassesService {
 	public void delete(String className) {
 		if(!classesRepository.existsByClassName(className))
 			throw new IllegalArgumentException("반이 존재하지 않습니다.");
+		Classes classes = classesRepository.findByClassName(className).get();
+		classes.getAcademy().removeClasses(classes);
 		classesRepository.deleteByClassName(className);
 	}
 

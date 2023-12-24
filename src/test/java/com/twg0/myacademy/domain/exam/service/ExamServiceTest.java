@@ -75,4 +75,27 @@ class ExamServiceTest {
 		assertThat(result.getCountOfStudent()).isEqualTo(examRequest.getCountOfStudent());
 		assertThat(result.getClasses()).isEqualTo(examRequest.getClasses());
 	}
+
+	@Test
+	public void 시험수정() throws Exception {
+	    // given
+		final ExamRequest examRequest = ExamRequest.builder()
+			.date(DATE)
+			.name("주간테스트")
+			.countOfStudent(10)
+			.build();
+		final ExamRequest examRequest2 = ExamRequest.builder()
+			.date(DATE)
+			.name("일간테스트")
+			.countOfStudent(20)
+			.build();
+	    // when
+		examService.create(CLASSES.getClassName(), examRequest);
+		ExamResponse result = examService.updateInfo(examRequest2, examRequest.getDateName());
+		// then
+		assertThat(result.getName()).isEqualTo(examRequest2.getName());
+		assertThat(result.getDate()).isEqualTo(examRequest2.getDate());
+		assertThat(result.getCountOfStudent()).isEqualTo(examRequest2.getCountOfStudent());
+		assertThat(result.getClasses()).isEqualTo(examRequest.getClasses());
+	}
 }

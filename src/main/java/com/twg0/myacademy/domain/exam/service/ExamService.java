@@ -40,4 +40,11 @@ public class ExamService {
 		exam.updateInfo(examRequest);
 		return ExamResponse.fromEntity(exam);
 	}
+
+	public ExamResponse read(String dateName) {
+		if(!examRepository.existsByDateName(dateName))
+			throw new IllegalArgumentException("해당 시험이 존재하지 않습니다.");
+		Exam exam = examRepository.findByDateName(dateName).get();
+		return ExamResponse.fromEntity(exam);
+	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
+import com.twg0.myacademy.domain.exam.DTO.ExamRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,9 +41,16 @@ public class Exam extends BaseEntity {
 	@Column(length = 9)
 	private Integer countOfStudent;
 
+	public void updateInfo(ExamRequest examRequest) {
+		this.name = examRequest.getName();
+		this.date = examRequest.getDate();
+		this.countOfStudent = examRequest.getCountOfStudent();
+		this.dateName = examRequest.getDate().toString() + examRequest.getName();
+	}
+
 	@Builder
 	public Exam(String name, LocalDateTime date, Integer countOfStudent, Classes classes) {
-		this.dateName = date.getNano() + name;
+		this.dateName = date.toString() + name;
 		this.name = name;
 		this.date = date;
 		this.countOfStudent = countOfStudent;

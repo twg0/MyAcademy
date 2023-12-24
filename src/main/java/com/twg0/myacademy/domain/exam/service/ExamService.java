@@ -25,6 +25,8 @@ public class ExamService {
 	public ExamResponse create(String className, ExamRequest examRequest) {
 		if (!classesRepository.existsByClassName(className))
 			throw new IllegalArgumentException("반이 존재하지 않습니다.");
+		if(examRepository.existsByDateName(examRequest.getDateName()))
+			throw new IllegalArgumentException("해당 시험이 이미 존재한다.");
 		Classes classes = classesRepository.findByClassName(className).get();
 		examRequest.setClasses(classes);
 		Exam exam = examRepository.save(examRequest.toEntity());
@@ -39,6 +41,15 @@ public class ExamService {
 		Exam exam = examRepository.findByDateName(dateName).get();
 		exam.updateInfo(examRequest);
 		return ExamResponse.fromEntity(exam);
+	}
+
+	@Transactional
+	public void delete(String dateName) {
+		if(!examRepository.existsByDateName(dateName))
+			throw new IllegalArgumentException("해당 시험이 존재하지 않습니다.");
+		Exam exam = examRepository.findByDateName(dateName).get();
+		exam.getClasses().removeExams(exam);
+		examRepository.deleteByDateName(dateName);
 	}
 
 	public ExamResponse read(String dateName) {

@@ -116,4 +116,20 @@ class ExamServiceTest {
 		assertThat(result.getCountOfStudent()).isEqualTo(examRequest.getCountOfStudent());
 		assertThat(result.getClasses()).isEqualTo(examRequest.getClasses());
 	}
+
+	@Test
+	public void 시험삭제() throws Exception {
+		// given
+		final ExamRequest examRequest = ExamRequest.builder()
+			.date(DATE)
+			.name("주간테스트")
+			.countOfStudent(10)
+			.build();
+		// when
+		examService.create(CLASSES.getClassName(), examRequest);
+	    examService.delete(examRequest.getDateName());
+	    // then
+		assertThrows(IllegalArgumentException.class, () ->
+			examService.delete(examRequest.getDateName()));
+	}
 }

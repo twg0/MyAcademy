@@ -11,6 +11,7 @@ import lombok.Data;
 
 @Data
 public class ExamRequest {
+	private String dateName;
 	private String name;
 	private LocalDateTime date;
 	private Integer countOfStudent;
@@ -18,6 +19,7 @@ public class ExamRequest {
 
 	@Builder
 	public ExamRequest(String name, LocalDateTime date, Integer countOfStudent, Classes classes) {
+		this.dateName = date.toString() + name;
 		this.name = name;
 		this.date = date;
 		this.countOfStudent = countOfStudent;

@@ -78,6 +78,14 @@ public class Classes extends BaseEntity {
 		this.memberClasses.remove(memberClasses);
 	}
 
+	public void addExams(Exam exam) {
+		this.exams.add(exam);
+	}
+
+	public void removeExams(Exam exam) {
+		this.exams.remove(exam);
+	}
+
 	/* Override */
 
 	@Override

@@ -13,4 +13,6 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
 	Optional<Exam> findByDateName(String dateName);
 
 	void deleteByDateName(String dateName);
+
+	boolean existsByDateName(String dateName);
 }

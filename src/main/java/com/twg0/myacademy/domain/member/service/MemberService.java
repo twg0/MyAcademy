@@ -29,6 +29,7 @@ public class MemberService {
 		Academy academy = academyRepository.findByUserId(academyUserId).get();
 		memberRequest.setAcademy(academy);
 		Member member = memberRepository.save(memberRequest.toEntity());
+		academy.addMembers(member);
 		return MemberResponse.fromEntity(member);
 	}
 
@@ -47,6 +48,8 @@ public class MemberService {
 		if(!memberRepository.existsByUserId(userId)) {
 			throw new IllegalArgumentException("ID가 존재하지 않습니다.");
 		}
+		Member member = memberRepository.findByUserId(userId).get();
+		member.getAcademy().removeMembers(member);
 		memberRepository.deleteByUserId(userId);
 	}
 

@@ -121,4 +121,25 @@ class GradeServiceTest {
 		assertThrows(IllegalArgumentException.class, () ->
 			gradeService.delete(MEMBER.getUserId() + EXAM.getDateName()));
 	}
+
+	@Test
+	public void 성적변경() throws Exception {
+		// given
+		String score = "{"
+			+ "국어:90,"
+			+ "수1:85,"
+			+ "영어:80"
+			+ "}";
+		String score2 = "{"
+			+ "국어:80,"
+			+ "수1:90,"
+			+ "영어:75"
+			+ "}";
+		// when
+		GradeDTO gradeDTO = gradeService.create(MEMBER.getUserId(), EXAM.getDateName(), score);
+		GradeDTO result = gradeService.update(gradeDTO.getMemberExam(), score2);
+		// then
+		assertThat(result.getMemberExam()).isEqualTo(gradeDTO.getMemberExam());
+		assertThat(result.getScore()).isEqualTo(score2);
+	}
 }

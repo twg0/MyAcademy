@@ -105,4 +105,20 @@ class GradeServiceTest {
 		assertThat(result.getMemberExam()).isEqualTo(MEMBER.getUserId() + EXAM.getDateName());
 		assertThat(result.getScore()).isEqualTo(score);
 	}
+
+	@Test
+	public void 성적삭제() throws Exception {
+	    // given
+		String score = "{"
+			+ "국어:90,"
+			+ "수1:85,"
+			+ "영어:80"
+			+ "}";
+	    // when
+		gradeService.create(MEMBER.getUserId(), EXAM.getDateName(), score);
+		gradeService.delete(MEMBER.getUserId() + EXAM.getDateName());
+	    // then
+		assertThrows(IllegalArgumentException.class, () ->
+			gradeService.delete(MEMBER.getUserId() + EXAM.getDateName()));
+	}
 }

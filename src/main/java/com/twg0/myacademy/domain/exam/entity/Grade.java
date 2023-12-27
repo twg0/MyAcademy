@@ -41,6 +41,10 @@ public class Grade extends BaseEntity {
 		this.exam = exam;
 	}
 
+	public void update(String score) {
+		this.score = score;
+	}
+
 	/* 연관관계 설정 */
 
 	@ManyToOne(fetch = FetchType.LAZY)

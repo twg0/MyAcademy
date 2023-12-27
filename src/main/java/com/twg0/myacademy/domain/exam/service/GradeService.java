@@ -58,4 +58,15 @@ public class GradeService {
 		grade.getExam().removeGrades(grade);
 		gradeRepository.delete(grade);
 	}
+
+	@Transactional
+	public GradeDTO update(String memberExam, String score) {
+		Optional<Grade> optionalGrade = gradeRepository.findByMemberExam(memberExam);
+		if(optionalGrade.isEmpty())
+			throw new IllegalArgumentException("존재하지 않는 성적입니다.");
+		Grade grade = optionalGrade.get();
+		grade.update(score);
+		return GradeDTO.fromEntity(grade);
+	}
+	// readAll
 }

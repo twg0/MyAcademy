@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -141,5 +142,22 @@ class GradeServiceTest {
 		// then
 		assertThat(result.getMemberExam()).isEqualTo(gradeDTO.getMemberExam());
 		assertThat(result.getScore()).isEqualTo(score2);
+	}
+
+	@Test
+	public void 사용자기준조회() throws Exception {
+	    // given
+		String score = "{"
+			+ "국어:90,"
+			+ "수1:85,"
+			+ "영어:80"
+			+ "}";
+	    // when
+		GradeDTO gradeDTO = gradeService.create(MEMBER.getUserId(), EXAM.getDateName(), score);
+		List<GradeDTO> gradeDTOList = gradeService.readAllByMember(MEMBER.getUserId());
+		// then
+		GradeDTO result = gradeDTOList.get(0);
+		assertThat(result.getMemberExam()).isEqualTo(gradeDTO.getMemberExam());
+		assertThat(result.getScore()).isEqualTo(score);
 	}
 }

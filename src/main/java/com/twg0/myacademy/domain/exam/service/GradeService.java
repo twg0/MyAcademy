@@ -78,4 +78,11 @@ public class GradeService {
 		return gradeList.stream().map(GradeDTO::fromEntity).toList();
 	}
 
+	public List<GradeDTO> readAllByExam(String dateName) {
+		Optional<Exam> optionalExam = examRepository.findByDateName(dateName);
+		if(optionalExam.isEmpty())
+			throw new IllegalArgumentException("존재하지 않는 시험입니다.");
+		List<Grade> gradeList = gradeRepository.findAllByExam(optionalExam.get());
+		return gradeList.stream().map(GradeDTO::fromEntity).toList();
+	}
 }

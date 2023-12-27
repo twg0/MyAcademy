@@ -1,5 +1,6 @@
 package com.twg0.myacademy.domain.exam.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -68,5 +69,13 @@ public class GradeService {
 		grade.update(score);
 		return GradeDTO.fromEntity(grade);
 	}
-	// readAll
+
+	public List<GradeDTO> readAllByMember(String memberUserId) {
+		Optional<Member> optionalMember = memberRepository.findByUserId(memberUserId);
+		if(optionalMember.isEmpty())
+			throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
+		List<Grade> gradeList = gradeRepository.findAllByMember(optionalMember.get());
+		return gradeList.stream().map(GradeDTO::fromEntity).toList();
+	}
+
 }

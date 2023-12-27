@@ -64,4 +64,12 @@ public class Exam extends BaseEntity {
 
 	@OneToMany(mappedBy = "exam")
 	private List<Grade> grades = new ArrayList<>();
+
+	public void addGrades(Grade grade) {
+		grades.add(grade);
+	}
+
+	public void removeGrades(Grade grade) {
+		grades.remove(grade);
+	}
 }

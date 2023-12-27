@@ -28,8 +28,9 @@ public class MemberService {
 		}
 		Academy academy = academyRepository.findByUserId(academyUserId).get();
 		memberRequest.setAcademy(academy);
-		Member member = memberRepository.save(memberRequest.toEntity());
+		Member member = memberRequest.toEntity();
 		academy.addMembers(member);
+		memberRepository.save(member);
 		return MemberResponse.fromEntity(member);
 	}
 

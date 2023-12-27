@@ -160,4 +160,21 @@ class GradeServiceTest {
 		assertThat(result.getMemberExam()).isEqualTo(gradeDTO.getMemberExam());
 		assertThat(result.getScore()).isEqualTo(score);
 	}
+
+	@Test
+	public void 시험기준조회() throws Exception {
+	    // given
+		String score = "{"
+			+ "국어:90,"
+			+ "수1:85,"
+			+ "영어:80"
+			+ "}";
+	    // when
+		GradeDTO gradeDTO = gradeService.create(MEMBER.getUserId(), EXAM.getDateName(), score);
+		List<GradeDTO> gradeDTOList = gradeService.readAllByExam(EXAM.getDateName());
+		// then
+		GradeDTO result = gradeDTOList.get(0);
+		assertThat(result.getMemberExam()).isEqualTo(gradeDTO.getMemberExam());
+		assertThat(result.getScore()).isEqualTo(score);
+	}
 }

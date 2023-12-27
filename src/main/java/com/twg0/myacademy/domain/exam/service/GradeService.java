@@ -35,12 +35,27 @@ public class GradeService {
 			throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
 		if(optionalExam.isEmpty())
 			throw new IllegalArgumentException("존재하지 않는 시험입니다.");
+		Member member = optionalMember.get();
+		Exam exam = optionalExam.get();
 		Grade grade = Grade.builder()
-			.exam(optionalExam.get())
-			.member(optionalMember.get())
+			.exam(exam)
+			.member(member)
 			.score(score)
 			.build();
 		Grade save = gradeRepository.save(grade);
+		member.addGrades(grade);
+
 		return GradeDTO.fromEntity(save);
+	}
+
+	@Transactional
+	public void delete(String memberExam) {
+		Optional<Grade> optionalGrade = gradeRepository.findByMemberExam(memberExam);
+		if(optionalGrade.isEmpty())
+			throw new IllegalArgumentException("존재하지 않는 성적입니다.");
+		Grade grade = optionalGrade.get();
+		grade.getMember().removeGrades(grade);
+		grade.getExam().removeGrades(grade);
+		gradeRepository.delete(grade);
 	}
 }

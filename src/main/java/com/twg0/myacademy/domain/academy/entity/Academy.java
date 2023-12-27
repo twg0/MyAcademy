@@ -54,15 +54,13 @@ public class Academy extends BaseEntity {
 
 	@Builder
 	public Academy(String name, String phoneNumber, String address, Integer studentNumber, String userId,
-		String password,
-		List<Member> members) {
+		String password) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.studentNumber = studentNumber;
 		this.userId = userId;
 		this.password = password;
-		this.members = members;
 	}
 
 	/* 메소드 */

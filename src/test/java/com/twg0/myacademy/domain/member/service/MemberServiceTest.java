@@ -55,7 +55,6 @@ class MemberServiceTest {
 			.birth(BIRTH)
 			.school("방산")
 			.role(Role.MEMBER)
-			.academy(ACADEMY)
 			.build();
 	    // when
 		MemberResponse result = memberService.create(memberRequest, ACADEMY.getUserId());

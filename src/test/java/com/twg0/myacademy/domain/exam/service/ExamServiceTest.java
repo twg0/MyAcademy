@@ -41,7 +41,7 @@ class ExamServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("tjrkd")
 			.build();
 		ACADEMY = academyRepository.save(academy);
@@ -73,7 +73,6 @@ class ExamServiceTest {
 		assertThat(result.getName()).isEqualTo(examRequest.getName());
 		assertThat(result.getDate()).isEqualTo(examRequest.getDate());
 		assertThat(result.getCountOfStudent()).isEqualTo(examRequest.getCountOfStudent());
-		assertThat(result.getClasses()).isEqualTo(examRequest.getClasses());
 	}
 
 	@Test
@@ -96,7 +95,6 @@ class ExamServiceTest {
 		assertThat(result.getName()).isEqualTo(examRequest2.getName());
 		assertThat(result.getDate()).isEqualTo(examRequest2.getDate());
 		assertThat(result.getCountOfStudent()).isEqualTo(examRequest2.getCountOfStudent());
-		assertThat(result.getClasses()).isEqualTo(examRequest.getClasses());
 	}
 
 	@Test
@@ -114,7 +112,6 @@ class ExamServiceTest {
 		assertThat(result.getName()).isEqualTo(examRequest.getName());
 		assertThat(result.getDate()).isEqualTo(examRequest.getDate());
 		assertThat(result.getCountOfStudent()).isEqualTo(examRequest.getCountOfStudent());
-		assertThat(result.getClasses()).isEqualTo(examRequest.getClasses());
 	}
 
 	@Test

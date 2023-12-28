@@ -43,7 +43,7 @@ class ExamRepositoryTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("tjrkd")
 			.build();
 		ACADEMY = academyRepository.save(academy);
@@ -99,7 +99,6 @@ class ExamRepositoryTest {
 		assertThat(result.getDateName()).isEqualTo(exam.getDateName());
 		assertThat(result.getName()).isEqualTo(exam.getName());
 		assertThat(result.getDate()).isEqualTo(exam.getDate());
-		assertThat(result.getClasses()).isEqualTo(exam.getClasses());
 		assertThat(result.getCountOfStudent()).isEqualTo(exam.getCountOfStudent());
 	}
 

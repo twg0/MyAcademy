@@ -81,6 +81,10 @@ public class Member extends BaseEntity {
 		this.academy = academy;
 	}
 
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	/* 연관관계 필요 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "academy_id", nullable = false)

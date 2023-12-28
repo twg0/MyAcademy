@@ -66,8 +66,6 @@ public class Member extends BaseEntity {
 		this.birth = memberRequest.getBirth();
 		this.school = memberRequest.getSchool();
 		this.age = memberRequest.getAge();
-		this.role = memberRequest.getRole();
-		this.academy = memberRequest.getAcademy();
 	}
 
 	@Builder
@@ -94,6 +92,10 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "member")
 	private List<Grade> grades = new ArrayList<>();
 
+	public void setAcademy(Academy academy) {
+		this.academy = academy;
+		academy.addMembers(this);
+	}
 	public void addMemberClasses(MemberClasses memberClasses) {
 		this.memberClasses.add(memberClasses);
 	}

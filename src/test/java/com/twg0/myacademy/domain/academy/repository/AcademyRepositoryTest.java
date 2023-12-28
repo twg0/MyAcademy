@@ -29,7 +29,7 @@ class AcademyRepositoryTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("tjrkd")
 			.build();
 
@@ -42,7 +42,7 @@ class AcademyRepositoryTest {
 		assertThat(result.getAddress()).isEqualTo("서울특별시 송파구 마천동");
 		assertThat(result.getPhoneNumber()).isEqualTo("02-123-4567");
 		assertThat(result.getStudentNumber()).isEqualTo(200);
-		assertThat(result.getUserId()).isEqualTo("seokang");
+		assertThat(result.getAcademyId()).isEqualTo("seokang");
 		assertThat(result.getPassword()).isEqualTo("tjrkd");
 	}
 
@@ -54,13 +54,13 @@ class AcademyRepositoryTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("tjrkd")
 			.build();
 
 		// when
 		academyRepository.save(academy);
-		final Academy result = academyRepository.findByUserId("seokang").get();
+		final Academy result = academyRepository.findByAcademyId("seokang").get();
 
 		// then
 		assertThat(result.getId()).isNotNull();
@@ -68,7 +68,7 @@ class AcademyRepositoryTest {
 		assertThat(result.getAddress()).isEqualTo("서울특별시 송파구 마천동");
 		assertThat(result.getPhoneNumber()).isEqualTo("02-123-4567");
 		assertThat(result.getStudentNumber()).isEqualTo(200);
-		assertThat(result.getUserId()).isEqualTo("seokang");
+		assertThat(result.getAcademyId()).isEqualTo("seokang");
 		assertThat(result.getPassword()).isEqualTo("tjrkd");
 	}
 
@@ -80,7 +80,7 @@ class AcademyRepositoryTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang1")
+			.academyId("seokang1")
 			.password("tjrkd")
 			.build();
 
@@ -89,7 +89,7 @@ class AcademyRepositoryTest {
 			.address("서울특별시 송파구 거여동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang1")
+			.academyId("seokang1")
 			.password("tjrkd")
 			.build();
 
@@ -107,14 +107,14 @@ class AcademyRepositoryTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("tjrkd")
 			.build();
 
 		// when
 		academyRepository.save(academy);
-		academyRepository.deleteByUserId("seokang");
-		Optional<Academy> result = academyRepository.findByUserId("seokang");
+		academyRepository.deleteByAcademyId("seokang");
+		Optional<Academy> result = academyRepository.findByAcademyId("seokang");
 
 		// then
 		assertThrows(NoSuchElementException.class, () -> result.get());

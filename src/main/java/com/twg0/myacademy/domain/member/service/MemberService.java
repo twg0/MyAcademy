@@ -8,6 +8,7 @@ import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
 import com.twg0.myacademy.domain.member.DTO.MemberRequest;
 import com.twg0.myacademy.domain.member.DTO.MemberResponse;
 import com.twg0.myacademy.domain.member.entity.Member;
+import com.twg0.myacademy.domain.member.enums.Role;
 import com.twg0.myacademy.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,14 @@ public class MemberService {
 	private final AcademyRepository academyRepository;
 
 	@Transactional
-	public MemberResponse create(MemberRequest memberRequest, String academyUserId) {
+	public MemberResponse create(MemberRequest memberRequest, String academyUserId, Role role) {
 		if(memberRepository.existsByUserId(memberRequest.getUserId())) {
 			throw new IllegalArgumentException("ID가 이미 존재합니다.");
 		}
-		Academy academy = academyRepository.findByAcademyId(academyUserId).get();
+		Academy academy = academyRepository.findByAcademyUserId(academyUserId).get();
 		Member member = memberRequest.toEntity();
 		member.setAcademy(academy);
+		member.setRole(role);
 		memberRepository.save(member);
 		return MemberResponse.fromEntity(member);
 	}

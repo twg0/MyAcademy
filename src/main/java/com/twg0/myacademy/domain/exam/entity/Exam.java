@@ -57,6 +57,11 @@ public class Exam extends BaseEntity {
 		this.classes = classes;
 	}
 
+	public void setClasses(Classes classes) {
+		this.classes = classes;
+		classes.addExams(this);
+	}
+
 	/* 연관관계 설정 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "classes_id", nullable = false)

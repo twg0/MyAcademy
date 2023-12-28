@@ -12,7 +12,6 @@ public class ClassesRequest {
 	private String subject;
 	private String teacher;
 	private Integer countOfStudent;
-	private Academy academy;
 
 	@Builder
 	public ClassesRequest(String className, String subject, String teacher, Integer countOfStudent) {
@@ -28,7 +27,6 @@ public class ClassesRequest {
 			.subject(this.subject)
 			.teacher(this.teacher)
 			.countOfStudent(this.countOfStudent)
-			.academy(academy)
 			.build();
 	}
 }

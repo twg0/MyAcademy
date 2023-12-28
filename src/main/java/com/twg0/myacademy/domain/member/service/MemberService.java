@@ -26,10 +26,9 @@ public class MemberService {
 		if(memberRepository.existsByUserId(memberRequest.getUserId())) {
 			throw new IllegalArgumentException("ID가 이미 존재합니다.");
 		}
-		Academy academy = academyRepository.findByUserId(academyUserId).get();
-		memberRequest.setAcademy(academy);
+		Academy academy = academyRepository.findByAcademyId(academyUserId).get();
 		Member member = memberRequest.toEntity();
-		academy.addMembers(member);
+		member.setAcademy(academy);
 		memberRepository.save(member);
 		return MemberResponse.fromEntity(member);
 	}

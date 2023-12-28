@@ -38,7 +38,9 @@ public class MemberClasses extends BaseEntity {
 	@Builder
 	public MemberClasses(Member member, Classes classes) {
 		this.member = member;
+		member.addMemberClasses(this);
 		this.classes = classes;
+		classes.addMemberClasses(this);
 	}
 
 	/* Override */

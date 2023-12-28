@@ -27,7 +27,7 @@ class AcademyServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("asdf")
 			.build();
 	    // when
@@ -37,7 +37,7 @@ class AcademyServiceTest {
 		assertThat(result.getAddress()).isEqualTo(academyRequest.getAddress());
 		assertThat(result.getPhoneNumber()).isEqualTo(academyRequest.getPhoneNumber());
 		assertThat(result.getStudentNumber()).isEqualTo(academyRequest.getStudentNumber());
-		assertThat(result.getUserId()).isEqualTo(academyRequest.getUserId());
+		assertThat(result.getAcademyId()).isEqualTo(academyRequest.getAcademyId());
 	}
 
 	@Test
@@ -48,18 +48,18 @@ class AcademyServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("asdf")
 			.build();
 		// when
 		academyService.create(academyRequest);
-		AcademyResponse result = academyService.read(academyRequest.getUserId());
+		AcademyResponse result = academyService.read(academyRequest.getAcademyId());
 	    // then
 		assertThat(result.getName()).isEqualTo(academyRequest.getName());
 		assertThat(result.getAddress()).isEqualTo(academyRequest.getAddress());
 		assertThat(result.getPhoneNumber()).isEqualTo(academyRequest.getPhoneNumber());
 		assertThat(result.getStudentNumber()).isEqualTo(academyRequest.getStudentNumber());
-		assertThat(result.getUserId()).isEqualTo(academyRequest.getUserId());
+		assertThat(result.getAcademyId()).isEqualTo(academyRequest.getAcademyId());
 	}
 
 	@Test
@@ -70,7 +70,7 @@ class AcademyServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("asdf")
 			.build();
 		final AcademyRequest academyRequest2 = AcademyRequest.builder()
@@ -78,7 +78,7 @@ class AcademyServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("asdf")
 			.build();
 	    // when
@@ -96,7 +96,7 @@ class AcademyServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("asdf")
 			.build();
 		final AcademyRequest academyRequest2 = AcademyRequest.builder()
@@ -104,11 +104,11 @@ class AcademyServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.build();
 	    // when
 		AcademyResponse academyResponse = academyService.create(academyRequest);
-		AcademyResponse result = academyService.updateInfo(academyResponse.getUserId(), academyRequest2);
+		AcademyResponse result = academyService.updateInfo(academyResponse.getAcademyId(), academyRequest2);
 		// then
 		assertThat(result.getName()).isEqualTo(academyRequest2.getName());
 		assertThat(result.getAddress()).isEqualTo(academyRequest2.getAddress());
@@ -124,14 +124,14 @@ class AcademyServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyId("seokang")
 			.password("asdf")
 			.build();
 	    // when
 		AcademyResponse academyResponse = academyService.create(academyRequest);
-		academyService.delete(academyResponse.getUserId());
+		academyService.delete(academyResponse.getAcademyId());
 		// then
 		assertThrows(IllegalAccessException.class,
-			() -> academyService.delete(academyRequest.getUserId()));
+			() -> academyService.delete(academyRequest.getAcademyId()));
 	}
 }

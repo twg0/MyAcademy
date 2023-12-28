@@ -41,7 +41,7 @@ class ExamServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.academyId("seokang")
+			.academyUserId("seokang")
 			.password("tjrkd")
 			.build();
 		ACADEMY = academyRepository.save(academy);

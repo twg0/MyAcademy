@@ -31,7 +31,7 @@ class ClassesServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyUserId("seokang")
 			.password("tjrkd")
 			.build();
 		ACADEMY = academy;
@@ -49,7 +49,7 @@ class ClassesServiceTest {
 				.teacher("kim")
 				.build();
 	    // when
-		ClassesResponse result = classesService.create(classesRequest, ACADEMY.getUserId());
+		ClassesResponse result = classesService.create(classesRequest, ACADEMY.getAcademyUserId());
 		// then
 		assertThat(result.getClassName()).isEqualTo(classesRequest.getClassName());
 		assertThat(result.getSubject()).isEqualTo(classesRequest.getSubject());
@@ -68,7 +68,7 @@ class ClassesServiceTest {
 				.teacher("kim")
 				.build();
 		// when
-		classesService.create(classesRequest, ACADEMY.getUserId());
+		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
 		ClassesResponse result = classesService.read(classesRequest.getClassName());
 		// then
 		assertThat(result.getClassName()).isEqualTo(classesRequest.getClassName());
@@ -95,7 +95,7 @@ class ClassesServiceTest {
 				.teacher("kim")
 				.build();
 		// when
-		classesService.create(classesRequest, ACADEMY.getUserId());
+		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
 		ClassesResponse result = classesService.updateInfo(classesRequest.getClassName(), update);
 		// then
 		assertThat(result.getClassName()).isEqualTo(update.getClassName());
@@ -122,10 +122,10 @@ class ClassesServiceTest {
 				.teacher("kim")
 				.build();
 		// when
-		classesService.create(classesRequest, ACADEMY.getUserId());
+		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
 		// then
 		assertThrows(IllegalArgumentException.class, () ->
-			classesService.create(classesRequest2, ACADEMY.getUserId()));
+			classesService.create(classesRequest2, ACADEMY.getAcademyUserId()));
 	}
 
 	@Test
@@ -139,7 +139,7 @@ class ClassesServiceTest {
 				.teacher("kim")
 				.build();
 		// when
-		classesService.create(classesRequest, ACADEMY.getUserId());
+		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
 		classesService.delete(classesRequest.getClassName());
 		// then
 		assertThrows(IllegalArgumentException.class, () ->

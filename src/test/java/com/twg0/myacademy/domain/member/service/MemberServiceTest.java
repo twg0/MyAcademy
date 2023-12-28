@@ -36,7 +36,7 @@ class MemberServiceTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyUserId("seokang")
 			.password("tjrkd")
 			.build();
 		ACADEMY = academy;
@@ -54,10 +54,9 @@ class MemberServiceTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
-			.role(Role.MEMBER)
 			.build();
 	    // when
-		MemberResponse result = memberService.create(memberRequest, ACADEMY.getUserId());
+		MemberResponse result = memberService.create(memberRequest, ACADEMY.getAcademyUserId(), Role.MEMBER);
 		// then
 		assertThat(result.getUsername()).isEqualTo(memberRequest.getUsername());
 		assertThat(result.getUserId()).isEqualTo(memberRequest.getUserId());
@@ -76,8 +75,6 @@ class MemberServiceTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
-			.role(Role.MEMBER)
-			.academy(ACADEMY)
 			.build();
 		final MemberRequest memberRequest2 = MemberRequest.builder()
 			.username("고길동")
@@ -86,11 +83,9 @@ class MemberServiceTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("오금")
-			.role(Role.MEMBER)
-			.academy(ACADEMY)
 			.build();
 	    // when
-		memberService.create(memberRequest, ACADEMY.getUserId());
+		memberService.create(memberRequest, ACADEMY.getAcademyUserId(), Role.MEMBER);
 		MemberResponse result = memberService.updateInfo(memberRequest2, memberRequest.getUserId());
 		// then
 		assertThat(result.getUsername()).isEqualTo(memberRequest2.getUsername());
@@ -110,11 +105,9 @@ class MemberServiceTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
-			.role(Role.MEMBER)
-			.academy(ACADEMY)
 			.build();
 	    // when
-		memberService.create(memberRequest, ACADEMY.getUserId());
+		memberService.create(memberRequest, ACADEMY.getAcademyUserId(), Role.MEMBER);
 		MemberResponse result = memberService.read(memberRequest.getUserId());
 		// then
 		assertThat(result.getUsername()).isEqualTo(memberRequest.getUsername());
@@ -134,11 +127,9 @@ class MemberServiceTest {
 			.age(18)
 			.birth(BIRTH)
 			.school("방산")
-			.role(Role.MEMBER)
-			.academy(ACADEMY)
 			.build();
 	    // when
-		memberService.create(memberRequest, ACADEMY.getUserId());
+		memberService.create(memberRequest, ACADEMY.getAcademyUserId(), Role.MEMBER);
 		memberService.delete(memberRequest.getUserId());
 	    // then
 		assertThrows(IllegalArgumentException.class, () ->

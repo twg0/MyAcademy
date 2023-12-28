@@ -41,7 +41,7 @@ class MemberRepositoryTest {
 			.address("서울특별시 송파구 마천동")
 			.phoneNumber("02-123-4567")
 			.studentNumber(200)
-			.userId("seokang")
+			.academyUserId("seokang")
 			.password("tjrkd")
 			.build();
 		ACADEMY = academy;
@@ -74,7 +74,7 @@ class MemberRepositoryTest {
 		assertThat(result.getAge()).isEqualTo(18);
 		assertThat(result.getBirth()).isEqualTo(BIRTH);
 		assertThat(result.getSchool()).isEqualTo("방산");
-		assertThat(result.getAcademy().getUserId()).isEqualTo("seokang");
+		assertThat(result.getAcademy().getAcademyUserId()).isEqualTo("seokang");
 	}
 
 	@Test
@@ -103,7 +103,7 @@ class MemberRepositoryTest {
 		assertThat(result.getAge()).isEqualTo(18);
 		assertThat(result.getBirth()).isEqualTo(BIRTH);
 		assertThat(result.getSchool()).isEqualTo("방산");
-		assertThat(result.getAcademy().getUserId()).isEqualTo("seokang");
+		assertThat(result.getAcademy().getAcademyUserId()).isEqualTo("seokang");
 	}
 
 	@Test

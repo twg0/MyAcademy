@@ -28,9 +28,9 @@ public class ExamService {
 		if(examRepository.existsByDateName(examRequest.getDateName()))
 			throw new IllegalArgumentException("해당 시험이 이미 존재한다.");
 		Classes classes = classesRepository.findByClassName(className).get();
-		examRequest.setClasses(classes);
-		Exam exam = examRepository.save(examRequest.toEntity());
-		classes.addExams(exam);
+		Exam exam = examRequest.toEntity();
+		exam.setClasses(classes);
+		examRepository.save(exam);
 		return ExamResponse.fromEntity(exam);
 	}
 

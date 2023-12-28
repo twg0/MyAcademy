@@ -70,6 +70,11 @@ public class Classes extends BaseEntity {
 	@OneToMany(mappedBy = "classes")
 	private List<MemberClasses> memberClasses = new ArrayList<>();
 
+	public void setAcademy(Academy academy) {
+		this.academy = academy;
+		academy.addClasses(this);
+	}
+
 	public void addMemberClasses(MemberClasses memberClasses) {
 		this.memberClasses.add(memberClasses);
 	}

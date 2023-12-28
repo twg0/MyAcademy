@@ -47,19 +47,19 @@ public class Academy extends BaseEntity {
 	private Integer studentNumber;
 
 	@Column(unique = true, nullable = false, length = 30)
-	private String academyId;
+	private String academyUserId;
 
 	@Column(nullable = false)
 	private String password;
 
 	@Builder
-	public Academy(String name, String phoneNumber, String address, Integer studentNumber, String academyId,
+	public Academy(String name, String phoneNumber, String address, Integer studentNumber, String academyUserId,
 		String password) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.studentNumber = studentNumber;
-		this.academyId = academyId;
+		this.academyUserId = academyUserId;
 		this.password = password;
 	}
 

@@ -25,7 +25,7 @@ public class AcademyService {
 	@Transactional
 	public AcademyResponse create(AcademyRequest academyRequest) {
 		// 중복 검사
-		if(academyRepository.existsByAcademyId(academyRequest.getAcademyId()))
+		if(academyRepository.existsByAcademyUserId(academyRequest.getAcademyUserId()))
 			throw new IllegalArgumentException("ID가 이미 존재합니다.");
 
 		Academy save = academyRepository.save(academyRequest.toEntity());
@@ -33,20 +33,20 @@ public class AcademyService {
 	}
 
 	@Transactional
-	public AcademyResponse updateInfo(String academyId, AcademyRequest academyRequest) {
-		Optional<Academy> result = academyRepository.findByAcademyId(academyId);
+	public AcademyResponse updateInfo(String academyUserId, AcademyRequest academyRequest) {
+		Optional<Academy> result = academyRepository.findByAcademyUserId(academyUserId);
 		return result.get().updateInfo(academyRequest);
 	}
 
 	@Transactional
-	public void delete(String academyId) throws IllegalAccessException {
-		if(!academyRepository.existsByAcademyId(academyId))
+	public void delete(String academyUserId) throws IllegalAccessException {
+		if(!academyRepository.existsByAcademyUserId(academyUserId))
 			throw new IllegalAccessException("ID가 존재하지 않습니다.");
-		academyRepository.deleteByAcademyId(academyId);
+		academyRepository.deleteByAcademyUserId(academyUserId);
 	}
 
-	public AcademyResponse read(String academyId) {
-		Optional<Academy> result = academyRepository.findByAcademyId(academyId);
+	public AcademyResponse read(String academyUserId) {
+		Optional<Academy> result = academyRepository.findByAcademyUserId(academyUserId);
 		return AcademyResponse.fromEntity(result.get());
 	}
 

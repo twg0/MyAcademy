@@ -10,9 +10,9 @@ import com.twg0.myacademy.domain.academy.entity.Academy;
 @Repository
 public interface AcademyRepository extends JpaRepository<Academy, Long> {
 
-	Optional<Academy> findByAcademyId(final String academyId);
+	Optional<Academy> findByAcademyUserId(final String academyUserId);
 
-	void deleteByAcademyId(final String academyId);
+	void deleteByAcademyUserId(final String academyUserId);
 
-	boolean existsByAcademyId(final String academyId);
+	boolean existsByAcademyUserId(final String academyUserId);
 }

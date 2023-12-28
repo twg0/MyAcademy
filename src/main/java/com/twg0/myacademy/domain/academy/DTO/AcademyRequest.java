@@ -12,17 +12,17 @@ public class AcademyRequest {
 	private String phoneNumber;
 	private String address;
 	private Integer studentNumber;
-	private String academyId;
+	private String academyUserId;
 	private String password;
 
 	@Builder
-	public AcademyRequest(String name, String phoneNumber, String address, Integer studentNumber, String academyId,
+	public AcademyRequest(String name, String phoneNumber, String address, Integer studentNumber, String academyUserId,
 		String password) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.studentNumber = studentNumber;
-		this.academyId = academyId;
+		this.academyUserId = academyUserId;
 		this.password = password;
 	}
 
@@ -32,7 +32,7 @@ public class AcademyRequest {
 			.phoneNumber(this.getPhoneNumber())
 			.address(this.getAddress())
 			.studentNumber(this.getStudentNumber())
-			.academyId(this.getAcademyId())
+			.academyUserId(this.getAcademyUserId())
 			.password(this.getPassword())
 			.build();
 	}

@@ -14,15 +14,15 @@ public class AcademyResponse {
 	private String phoneNumber;
 	private String address;
 	private Integer studentNumber;
-	private String userId;
+	private String academyId;
 
 	@Builder
-	public AcademyResponse(String name, String phoneNumber, String address, Integer studentNumber, String userId) {
+	public AcademyResponse(String name, String phoneNumber, String address, Integer studentNumber, String academyId) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.studentNumber = studentNumber;
-		this.userId = userId;
+		this.academyId = academyId;
 	}
 
 
@@ -32,7 +32,7 @@ public class AcademyResponse {
 			.phoneNumber(academy.getPhoneNumber())
 			.address(academy.getAddress())
 			.studentNumber(academy.getStudentNumber())
-			.userId(academy.getUserId())
+			.academyId(academy.getAcademyId())
 			.build();
 	}
 }

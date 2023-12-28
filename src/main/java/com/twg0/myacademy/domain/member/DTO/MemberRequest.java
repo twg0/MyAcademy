@@ -17,21 +17,16 @@ public class MemberRequest {
 	private LocalDateTime birth;
 	private String school;
 	private Integer age;
-	private Role role;
-	private Academy academy;
 
 	@Builder
 	public MemberRequest(String userId, String username, String password, LocalDateTime birth, String school,
-		Integer age,
-		Role role, Academy academy) {
+		Integer age) {
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.birth = birth;
 		this.school = school;
 		this.age = age;
-		this.role = role;
-		this.academy = academy;
 	}
 
 	public Member toEntity() {
@@ -42,8 +37,6 @@ public class MemberRequest {
 			.age(this.age)
 			.birth(this.birth)
 			.school(this.school)
-			.academy(this.academy)
-			.role(this.role)
 			.build();
 	}
 }

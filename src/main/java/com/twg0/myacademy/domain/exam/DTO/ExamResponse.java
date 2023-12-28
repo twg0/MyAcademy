@@ -11,12 +11,14 @@ import lombok.Data;
 
 @Data
 public class ExamResponse {
+	private String dateName;
 	private String name;
 	private LocalDateTime date;
 	private Integer countOfStudent;
 
 	@Builder
 	public ExamResponse(String name, LocalDateTime date, Integer countOfStudent) {
+		this.dateName = date.toString() + name;
 		this.name = name;
 		this.date = date;
 		this.countOfStudent = countOfStudent;

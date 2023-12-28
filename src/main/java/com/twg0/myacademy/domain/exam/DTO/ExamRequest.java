@@ -17,8 +17,8 @@ public class ExamRequest {
 	private Integer countOfStudent;
 
 	@Builder
-	public ExamRequest(String dateName, String name, LocalDateTime date, Integer countOfStudent) {
-		this.dateName = dateName;
+	public ExamRequest(String name, LocalDateTime date, Integer countOfStudent) {
+		this.dateName = date.toString() + name;
 		this.name = name;
 		this.date = date;
 		this.countOfStudent = countOfStudent;

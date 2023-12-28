@@ -15,15 +15,13 @@ public class ExamRequest {
 	private String name;
 	private LocalDateTime date;
 	private Integer countOfStudent;
-	private Classes classes;
 
 	@Builder
-	public ExamRequest(String name, LocalDateTime date, Integer countOfStudent, Classes classes) {
-		this.dateName = date.toString() + name;
+	public ExamRequest(String dateName, String name, LocalDateTime date, Integer countOfStudent) {
+		this.dateName = dateName;
 		this.name = name;
 		this.date = date;
 		this.countOfStudent = countOfStudent;
-		this.classes = classes;
 	}
 
 	public Exam toEntity() {
@@ -31,7 +29,6 @@ public class ExamRequest {
 			.name(this.name)
 			.date(this.date)
 			.countOfStudent(this.countOfStudent)
-			.classes(this.classes)
 			.build();
 	}
 }

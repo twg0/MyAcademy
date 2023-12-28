@@ -14,14 +14,12 @@ public class ExamResponse {
 	private String name;
 	private LocalDateTime date;
 	private Integer countOfStudent;
-	private Classes classes;
 
 	@Builder
-	public ExamResponse(String name, LocalDateTime date, Integer countOfStudent, Classes classes) {
+	public ExamResponse(String name, LocalDateTime date, Integer countOfStudent) {
 		this.name = name;
 		this.date = date;
 		this.countOfStudent = countOfStudent;
-		this.classes = classes;
 	}
 
 	public static ExamResponse fromEntity(Exam exam) {
@@ -29,7 +27,6 @@ public class ExamResponse {
 			.name(exam.getName())
 			.date(exam.getDate())
 			.countOfStudent(exam.getCountOfStudent())
-			.classes(exam.getClasses())
 			.build();
 	}
 }

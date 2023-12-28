@@ -38,7 +38,9 @@ public class Grade extends BaseEntity {
 		this.memberExam = member.getUserId() + exam.getDateName();
 		this.score = score;
 		this.member = member;
+		member.addGrades(this);
 		this.exam = exam;
+		exam.addGrades(this);
 	}
 
 	public void update(String score) {

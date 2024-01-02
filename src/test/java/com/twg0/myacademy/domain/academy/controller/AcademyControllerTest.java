@@ -162,4 +162,26 @@ class AcademyControllerTest {
 			.andExpect(jsonPath("academyUserId").value("seokang"));
 
 	}
+
+	@Test
+	public void 학원삭제API() throws Exception {
+		// given
+		final AcademyRequest academyRequest = AcademyRequest.builder()
+			.name("서강학원")
+			.address("서울특별시 송파구 마천동")
+			.phoneNumber("02-123-4567")
+			.studentNumber(200)
+			.academyUserId("seokang")
+			.password("asdf")
+			.build();
+
+		// when
+		ResultActions resultActions =
+			mvc.perform(delete("/academy/{academyUserId}", academyRequest.getAcademyUserId()))
+				.andDo(print());
+
+		// then
+		resultActions
+			.andExpect(status().is2xxSuccessful());
+	}
 }

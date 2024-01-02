@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twg0.myacademy.domain.academy.DTO.AcademyRequest;
 import com.twg0.myacademy.domain.academy.DTO.AcademyResponse;
 import com.twg0.myacademy.domain.academy.service.AcademyService;
@@ -32,8 +33,11 @@ class AcademyControllerTest {
 	@MockBean
 	private AcademyService academyService;
 
+	@Autowired
+	private ObjectMapper objectMapper;
+
 	@Test
-	public void 학원등록API() throws Exception {
+	public void 학원조회API() throws Exception {
 	    // given
 		final AcademyRequest academyRequest = AcademyRequest.builder()
 			.name("서강학원")
@@ -67,5 +71,45 @@ class AcademyControllerTest {
 			.andExpect(jsonPath("phoneNumber").value("02-123-4567"))
 			.andExpect(jsonPath("studentNumber").value(200))
 			.andExpect(jsonPath("academyUserId").value("seokang"));
+	}
+
+	@Test
+	public void 학원등록API() throws Exception {
+		// given
+		final AcademyRequest academyRequest = AcademyRequest.builder()
+			.name("서강학원")
+			.address("서울특별시 송파구 마천동")
+			.phoneNumber("02-123-4567")
+			.studentNumber(200)
+			.academyUserId("seokang")
+			.password("asdf")
+			.build();
+
+		final AcademyResponse academyResponse = AcademyResponse.builder()
+			.name("서강학원")
+			.address("서울특별시 송파구 마천동")
+			.phoneNumber("02-123-4567")
+			.studentNumber(200)
+			.academyUserId("seokang")
+			.build();
+
+		when(academyService.create(academyRequest)).thenReturn(academyResponse);
+
+		// when
+		ResultActions resultActions =
+			mvc.perform(post("/academy")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(academyRequest))
+				).andDo(print());
+
+		// then
+		resultActions
+			.andExpect(status().is2xxSuccessful())
+			.andExpect(jsonPath("name").value("서강학원"))
+			.andExpect(jsonPath("address").value("서울특별시 송파구 마천동"))
+			.andExpect(jsonPath("phoneNumber").value("02-123-4567"))
+			.andExpect(jsonPath("studentNumber").value(200))
+			.andExpect(jsonPath("academyUserId").value("seokang"));
+
 	}
 }

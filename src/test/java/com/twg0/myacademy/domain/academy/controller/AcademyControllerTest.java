@@ -112,4 +112,54 @@ class AcademyControllerTest {
 			.andExpect(jsonPath("academyUserId").value("seokang"));
 
 	}
+
+	@Test
+	public void 학원정보수정API() throws Exception {
+		// given
+		final AcademyRequest academyRequest = AcademyRequest.builder()
+			.name("서강학원")
+			.address("서울특별시 송파구 마천동")
+			.phoneNumber("02-123-4567")
+			.studentNumber(200)
+			.academyUserId("seokang")
+			.password("asdf")
+			.build();
+
+		final AcademyRequest academyRequest2 = AcademyRequest.builder()
+			.name("서강학원중등관")
+			.address("서울특별시 송파구 마천동")
+			.phoneNumber("02-123-4567")
+			.studentNumber(300)
+			.academyUserId("seokang")
+			.password("asdf")
+			.build();
+
+		final AcademyResponse academyResponse = AcademyResponse.builder()
+			.name("서강학원중등관")
+			.address("서울특별시 송파구 마천동")
+			.phoneNumber("02-123-4567")
+			.studentNumber(300)
+			.academyUserId("seokang")
+			.build();
+
+		when(academyService.updateInfo(academyRequest.getAcademyUserId(), academyRequest2))
+			.thenReturn(academyResponse);
+
+		// when
+		ResultActions resultActions =
+			mvc.perform(patch("/academy/{academyUserId}", academyRequest.getAcademyUserId())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(academyRequest2))
+			).andDo(print());
+
+		// then
+		resultActions
+			.andExpect(status().is2xxSuccessful())
+			.andExpect(jsonPath("name").value("서강학원중등관"))
+			.andExpect(jsonPath("address").value("서울특별시 송파구 마천동"))
+			.andExpect(jsonPath("phoneNumber").value("02-123-4567"))
+			.andExpect(jsonPath("studentNumber").value(300))
+			.andExpect(jsonPath("academyUserId").value("seokang"));
+
+	}
 }

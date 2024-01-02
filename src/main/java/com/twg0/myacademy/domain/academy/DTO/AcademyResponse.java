@@ -4,10 +4,12 @@ import com.twg0.myacademy.domain.academy.entity.Academy;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class AcademyResponse {
 
 	private String name;

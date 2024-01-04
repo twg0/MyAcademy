@@ -2,6 +2,7 @@ package com.twg0.myacademy.domain.academy.DTO;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AcademyResponse {
 
 	private String name;

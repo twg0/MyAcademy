@@ -2,10 +2,13 @@ package com.twg0.myacademy.domain.classes.DTO;
 
 import com.twg0.myacademy.domain.classes.entity.Classes;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ClassesResponse {
 	private String className;
 	private String subject;

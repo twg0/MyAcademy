@@ -6,10 +6,13 @@ import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.member.entity.Member;
 import com.twg0.myacademy.domain.member.enums.Role;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberRequest {
 	private String userId;
 	private String username;

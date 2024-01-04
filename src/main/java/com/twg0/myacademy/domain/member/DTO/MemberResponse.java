@@ -4,10 +4,13 @@ import java.time.LocalDateTime;
 
 import com.twg0.myacademy.domain.member.entity.Member;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberResponse {
 	private String userId;
 	private String username;

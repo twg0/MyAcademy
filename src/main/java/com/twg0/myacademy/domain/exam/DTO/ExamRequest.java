@@ -2,10 +2,8 @@ package com.twg0.myacademy.domain.exam.DTO;
 
 import java.time.LocalDateTime;
 
-import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.exam.entity.Exam;
 
-import jakarta.persistence.Column;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;

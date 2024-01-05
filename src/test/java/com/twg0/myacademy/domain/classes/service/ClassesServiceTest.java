@@ -16,8 +16,6 @@ import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
 import com.twg0.myacademy.domain.classes.DTO.ClassesRequest;
 import com.twg0.myacademy.domain.classes.DTO.ClassesResponse;
-import com.twg0.myacademy.domain.common.exception.entitynotfound.ClassesNotFoundException;
-import com.twg0.myacademy.domain.common.exception.invalidvalue.DuplicatedException;
 
 @SpringBootTest
 @Transactional

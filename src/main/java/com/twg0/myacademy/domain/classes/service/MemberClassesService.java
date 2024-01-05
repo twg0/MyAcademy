@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.twg0.myacademy.domain.classes.DTO.MemberClassesDTO;
 import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.classes.entity.MemberClasses;
-import com.twg0.myacademy.domain.classes.entity.MemberClassesID;
 import com.twg0.myacademy.domain.classes.repository.ClassesRepository;
 import com.twg0.myacademy.domain.classes.repository.MemberClassesRepository;
 import com.twg0.myacademy.domain.member.entity.Member;

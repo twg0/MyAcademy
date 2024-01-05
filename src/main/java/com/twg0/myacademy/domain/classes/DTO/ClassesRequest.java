@@ -1,6 +1,5 @@
 package com.twg0.myacademy.domain.classes.DTO;
 
-import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.classes.entity.Classes;
 
 import lombok.AccessLevel;

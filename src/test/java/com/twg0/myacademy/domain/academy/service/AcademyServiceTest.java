@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.twg0.myacademy.domain.academy.DTO.AcademyRequest;
 import com.twg0.myacademy.domain.academy.DTO.AcademyResponse;
-import com.twg0.myacademy.domain.common.exception.entitynotfound.AcademyNotFoundException;
-import com.twg0.myacademy.domain.common.exception.invalidvalue.DuplicatedException;
 
 @SpringBootTest
 @Transactional

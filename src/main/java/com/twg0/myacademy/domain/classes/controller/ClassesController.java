@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.twg0.myacademy.domain.academy.DTO.AcademyResponse;
 import com.twg0.myacademy.domain.academy.service.AcademyService;
 import com.twg0.myacademy.domain.classes.DTO.ClassesRequest;
 import com.twg0.myacademy.domain.classes.DTO.ClassesResponse;

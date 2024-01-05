@@ -2,9 +2,7 @@ package com.twg0.myacademy.domain.member.DTO;
 
 import java.time.LocalDateTime;
 
-import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.member.entity.Member;
-import com.twg0.myacademy.domain.member.enums.Role;
 
 import lombok.AccessLevel;
 import lombok.Builder;

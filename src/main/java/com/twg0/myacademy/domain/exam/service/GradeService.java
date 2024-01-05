@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.twg0.myacademy.domain.classes.entity.Classes;
-import com.twg0.myacademy.domain.classes.repository.ClassesRepository;
 import com.twg0.myacademy.domain.exam.DTO.GradeDTO;
 import com.twg0.myacademy.domain.exam.entity.Exam;
 import com.twg0.myacademy.domain.exam.entity.Grade;

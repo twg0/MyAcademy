@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -67,6 +68,43 @@ class ClassesControllerTest {
 		// then
 		resultActions
 			.andExpect(status().isFound())
+			.andExpect(jsonPath("subject").value("수학"))
+			.andExpect(jsonPath("className").value("예비고1A"))
+			.andExpect(jsonPath("countOfStudent").value(200))
+			.andExpect(jsonPath("teacher").value("kim"));
+	}
+
+	@Test
+	public void 반등록API() throws Exception {
+	    // given
+		final ClassesRequest classesRequest =
+			ClassesRequest.builder()
+				.subject("수학")
+				.className("예비고1A")
+				.countOfStudent(200)
+				.teacher("kim")
+				.build();
+
+		final ClassesResponse classesResponse =
+			ClassesResponse.builder()
+				.subject("수학")
+				.className("예비고1A")
+				.countOfStudent(200)
+				.teacher("kim")
+				.build();
+
+		when(academyService.exist("seokang")).thenReturn(true);
+		when(classesService.existByClassName("예비고1A")).thenReturn(false);
+		when(classesService.create(classesRequest, "seokang")).thenReturn(classesResponse);
+	    // when
+		ResultActions resultActions =
+			mvc.perform(post("/academy/{academyUserId}/classes", "seokang")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(classesRequest)))
+				.andDo(print());
+	    // then
+		resultActions
+			.andExpect(status().isCreated())
 			.andExpect(jsonPath("subject").value("수학"))
 			.andExpect(jsonPath("className").value("예비고1A"))
 			.andExpect(jsonPath("countOfStudent").value(200))

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.twg0.myacademy.domain.academy.DTO.AcademyRequest;
 import com.twg0.myacademy.domain.academy.DTO.AcademyResponse;
 import com.twg0.myacademy.domain.academy.service.AcademyService;
+import com.twg0.myacademy.domain.common.exception.ErrorCode;
+import com.twg0.myacademy.domain.common.exception.entitynotfound.AcademyNotFoundException;
+import com.twg0.myacademy.domain.common.exception.invalidvalue.DuplicatedException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +31,9 @@ public class AcademyController {
 	public ResponseEntity<AcademyResponse> findOne(
 		@PathVariable("academyUserId") String academyUserId
 	) {
+		if(!isAcademyExist(academyUserId))
+			throw new AcademyNotFoundException(ErrorCode.ACADEMY_NOT_FOUND);
+
 		AcademyResponse academyResponse = academyService.read(academyUserId);
 		return new ResponseEntity<>(academyResponse, HttpStatus.OK);
 	}
@@ -36,6 +42,9 @@ public class AcademyController {
 	public ResponseEntity<AcademyResponse> create(
 		@RequestBody AcademyRequest academyRequest
 	) {
+		if(isAcademyExist(academyRequest.getAcademyUserId()))
+			throw new DuplicatedException(ErrorCode.ID_DUPLICATED);
+
 		AcademyResponse academyResponse = academyService.create(academyRequest);
 		return new ResponseEntity<>(academyResponse, HttpStatus.CREATED);
 	}
@@ -45,6 +54,9 @@ public class AcademyController {
 		@PathVariable("academyUserId") String academyUserId,
 		@RequestBody AcademyRequest academyRequest
 	) {
+		if(!isAcademyExist(academyUserId))
+			throw new AcademyNotFoundException(ErrorCode.ACADEMY_NOT_FOUND);
+
 		AcademyResponse academyResponse = academyService.updateInfo(academyUserId, academyRequest);
 		return new ResponseEntity<>(academyResponse, HttpStatus.OK);
 	}
@@ -52,8 +64,15 @@ public class AcademyController {
 	@DeleteMapping("/{academyUserId}")
 	public ResponseEntity<Void> delete(
 		@PathVariable("academyUserId") String academyUserId
-	) throws IllegalAccessException {
+	) {
+		if(!isAcademyExist(academyUserId))
+			throw new AcademyNotFoundException(ErrorCode.ACADEMY_NOT_FOUND);
+
 		academyService.delete(academyUserId);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	private boolean isAcademyExist(String academyUserId) {
+		return academyService.exist(academyUserId);
 	}
 }

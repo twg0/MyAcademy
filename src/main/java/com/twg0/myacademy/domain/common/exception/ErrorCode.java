@@ -20,6 +20,7 @@ public enum ErrorCode {
 	// Common
 	ID_DUPLICATED("DUPLICATED_001", "이미 존재하는 ID입니다.", 409),
 
+	INTERNAL_SERVER_ERROR("SERVER_001", "서버에서 오류가 발생하였습니다.", 500),
 	;
 	private final String code;
 	private final String message;

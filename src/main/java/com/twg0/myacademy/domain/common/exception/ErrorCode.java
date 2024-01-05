@@ -17,7 +17,8 @@ public enum ErrorCode {
 	EXAM_NOT_FOUND("EXAM_001", "해당 시험을 찾을 수 없습니다.", 404),
 	// Grade
 
-
+	// Common
+	ID_DUPLICATED("DUPLICATED_001", "이미 존재하는 ID입니다.", 409),
 
 	;
 	private final String code;

@@ -110,4 +110,49 @@ class ClassesControllerTest {
 			.andExpect(jsonPath("countOfStudent").value(200))
 			.andExpect(jsonPath("teacher").value("kim"));
 	}
+
+	@Test
+	public void 반정보수정API() throws Exception {
+	    // given
+		final ClassesRequest classesRequest =
+			ClassesRequest.builder()
+				.subject("수학")
+				.className("예비고1A")
+				.countOfStudent(200)
+				.teacher("kim")
+				.build();
+
+		final ClassesRequest classesRequest2 =
+			ClassesRequest.builder()
+				.subject("과학")
+				.className("예비고3")
+				.countOfStudent(10)
+				.teacher("Choi")
+				.build();
+
+		final ClassesResponse classesResponse =
+			ClassesResponse.builder()
+				.subject("과학")
+				.className("예비고3")
+				.countOfStudent(10)
+				.teacher("Choi")
+				.build();
+
+		when(academyService.exist("seokang")).thenReturn(true);
+		when(classesService.existByClassName("예비고1A")).thenReturn(true);
+		when(classesService.updateInfo("예비고1A", classesRequest2)).thenReturn(classesResponse);
+		// when
+		ResultActions resultActions =
+			mvc.perform(patch("/academy/{academyUserId}/classes/{className}", "seokang", "예비고1A")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(classesRequest2)))
+				.andDo(print());
+		// then
+		resultActions
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("subject").value("과학"))
+			.andExpect(jsonPath("className").value("예비고3"))
+			.andExpect(jsonPath("countOfStudent").value(10))
+			.andExpect(jsonPath("teacher").value("Choi"));
+	}
 }

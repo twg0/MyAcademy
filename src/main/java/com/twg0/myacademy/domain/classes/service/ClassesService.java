@@ -25,8 +25,6 @@ public class ClassesService {
 
 	@Transactional
 	public ClassesResponse create(ClassesRequest classesRequest, String academyUserId) {
-		if(classesRepository.existsByClassName(classesRequest.getClassName()))
-			throw new IllegalArgumentException("반 이름이 이미 존재합니다.");
 		Academy academy = academyRepository.findByAcademyUserId(academyUserId).get();
 		Classes classes = classesRequest.toEntity();
 		classes.setAcademy(academy);
@@ -36,8 +34,6 @@ public class ClassesService {
 
 	@Transactional
 	public ClassesResponse updateInfo(String className, ClassesRequest classesRequest) {
-		if(classesRepository.existsByClassName(classesRequest.getClassName()))
-			throw new IllegalArgumentException("반 이름이 이미 존재합니다.");
 		Classes classes = classesRepository.findByClassName(className).get();
 		classes.updateInfo(classesRequest);
 		return ClassesResponse.fromEntity(classes);
@@ -45,24 +41,22 @@ public class ClassesService {
 
 	@Transactional
 	public void delete(String className) {
-		if(!classesRepository.existsByClassName(className))
-			throw new IllegalArgumentException("반이 존재하지 않습니다.");
 		Classes classes = classesRepository.findByClassName(className).get();
 		classes.getAcademy().removeClasses(classes);
 		classesRepository.deleteByClassName(className);
 	}
 
 	public ClassesResponse read(String className) {
-		if(!classesRepository.existsByClassName(className))
-			throw new IllegalArgumentException("반이 존재하지 않습니다.");
 		Classes classes = classesRepository.findByClassName(className).get();
 		return ClassesResponse.fromEntity(classes);
 	}
 
 	public List<ClassesResponse> readAll(String className) {
-		if(!classesRepository.existsByClassName(className))
-			throw new IllegalArgumentException("반이 존재하지 않습니다.");
 		List<Classes> classesList = classesRepository.findAllByClassName(className);
 		return classesList.stream().map(ClassesResponse::fromEntity).toList();
+	}
+
+	public boolean existByClassName(String className) {
+		return classesRepository.existsByClassName(className);
 	}
 }

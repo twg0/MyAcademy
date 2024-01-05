@@ -74,6 +74,9 @@ public class ClassesController {
 		if (!isClassesExist(className)) {
 			throw new ClassesNotFoundException(ErrorCode.CLASSES_NOT_FOUND);
 		}
+		if (isClassesExist(classesRequest.getClassName())) {
+			throw new DuplicatedException(ErrorCode.ID_DUPLICATED);
+		}
 
 		ClassesResponse classesResponse = classesService.updateInfo(className, classesRequest);
 		return new ResponseEntity<>(classesResponse, HttpStatus.OK);

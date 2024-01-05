@@ -3,14 +3,19 @@ package com.twg0.myacademy.domain.academy.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.twg0.myacademy.domain.academy.DTO.AcademyRequest;
 import com.twg0.myacademy.domain.academy.DTO.AcademyResponse;
+import com.twg0.myacademy.domain.common.exception.entitynotfound.AcademyNotFoundException;
+import com.twg0.myacademy.domain.common.exception.invalidvalue.DuplicatedException;
 
 @SpringBootTest
 @Transactional
@@ -84,7 +89,7 @@ class AcademyServiceTest {
 	    // when
 		academyService.create(academyRequest);
 	    // then
-		assertThrows(IllegalArgumentException.class,
+		assertThrows(DataIntegrityViolationException.class,
 			() -> academyService.create(academyRequest2));
 	}
 
@@ -131,7 +136,7 @@ class AcademyServiceTest {
 		AcademyResponse academyResponse = academyService.create(academyRequest);
 		academyService.delete(academyResponse.getAcademyUserId());
 		// then
-		assertThrows(IllegalAccessException.class,
-			() -> academyService.delete(academyRequest.getAcademyUserId()));
+		assertThrows(NoSuchElementException.class,
+			() -> academyService.read(academyRequest.getAcademyUserId()));
 	}
 }

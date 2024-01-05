@@ -155,4 +155,26 @@ class ClassesControllerTest {
 			.andExpect(jsonPath("countOfStudent").value(10))
 			.andExpect(jsonPath("teacher").value("Choi"));
 	}
+
+	@Test
+	public void 반삭제API() throws Exception {
+	    // given
+		final ClassesRequest classesRequest =
+			ClassesRequest.builder()
+				.subject("수학")
+				.className("예비고1A")
+				.countOfStudent(200)
+				.teacher("kim")
+				.build();
+
+		when(academyService.exist("seokang")).thenReturn(true);
+		when(classesService.existByClassName("예비고1A")).thenReturn(true);
+	    // when
+		ResultActions resultActions =
+			mvc.perform(delete("/academy/{academyUserId}/classes/{className}", "seokang", classesRequest.getClassName()))
+				.andDo(print());
+	    // then
+		resultActions
+			.andExpect(status().isOk());
+	}
 }

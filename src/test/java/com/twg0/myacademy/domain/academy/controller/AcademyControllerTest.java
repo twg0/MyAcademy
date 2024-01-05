@@ -56,6 +56,7 @@ class AcademyControllerTest {
 			.academyUserId("seokang")
 			.build();
 
+		when(academyService.exist(academyRequest.getAcademyUserId())).thenReturn(true);
 		when(academyService.read(academyRequest.getAcademyUserId())).thenReturn(academyResponse);
 
 	    // when
@@ -93,6 +94,7 @@ class AcademyControllerTest {
 			.academyUserId("seokang")
 			.build();
 
+		when(academyService.exist(academyRequest.getAcademyUserId())).thenReturn(false);
 		when(academyService.create(academyRequest)).thenReturn(academyResponse);
 
 		// when
@@ -142,6 +144,7 @@ class AcademyControllerTest {
 			.academyUserId("seokang")
 			.build();
 
+		when(academyService.exist(academyRequest.getAcademyUserId())).thenReturn(true);
 		when(academyService.updateInfo(academyRequest.getAcademyUserId(), academyRequest2))
 			.thenReturn(academyResponse);
 
@@ -175,6 +178,7 @@ class AcademyControllerTest {
 			.password("asdf")
 			.build();
 
+		when(academyService.exist(academyRequest.getAcademyUserId())).thenReturn(true);
 		// when
 		ResultActions resultActions =
 			mvc.perform(delete("/academy/{academyUserId}", academyRequest.getAcademyUserId()))

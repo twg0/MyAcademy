@@ -24,10 +24,6 @@ public class AcademyService {
 
 	@Transactional
 	public AcademyResponse create(AcademyRequest academyRequest) {
-		// 중복 검사
-		if(academyRepository.existsByAcademyUserId(academyRequest.getAcademyUserId()))
-			throw new IllegalArgumentException("ID가 이미 존재합니다.");
-
 		Academy save = academyRepository.save(academyRequest.toEntity());
 		return AcademyResponse.fromEntity(save);
 	}
@@ -39,9 +35,7 @@ public class AcademyService {
 	}
 
 	@Transactional
-	public void delete(String academyUserId) throws IllegalAccessException {
-		if(!academyRepository.existsByAcademyUserId(academyUserId))
-			throw new IllegalAccessException("ID가 존재하지 않습니다.");
+	public void delete(String academyUserId) {
 		academyRepository.deleteByAcademyUserId(academyUserId);
 	}
 
@@ -53,5 +47,9 @@ public class AcademyService {
 	public List<AcademyResponse> readAll() {
 		List<Academy> all = academyRepository.findAll();
 		return all.stream().map(AcademyResponse::fromEntity).toList();
+	}
+
+	public boolean exist(String academyUserId) {
+		return academyRepository.existsByAcademyUserId(academyUserId);
 	}
 }

@@ -3,6 +3,7 @@ package com.twg0.myacademy.domain.classes.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +59,23 @@ public class ClassesController {
 
 		ClassesResponse classesResponse = classesService.create(classesRequest, academyUserId);
 		return new ResponseEntity<>(classesResponse, HttpStatus.CREATED);
+	}
+
+	@PatchMapping("{className}")
+	public ResponseEntity<ClassesResponse> update(
+		@PathVariable("academyUserId") String academyUserId,
+		@PathVariable("className") String className,
+		@RequestBody ClassesRequest classesRequest
+	) {
+		if (!isAcademyExist(academyUserId)) {
+			throw new AcademyNotFoundException(ErrorCode.ACADEMY_NOT_FOUND);
+		}
+		if (!isClassesExist(className)) {
+			throw new ClassesNotFoundException(ErrorCode.CLASSES_NOT_FOUND);
+		}
+
+		ClassesResponse classesResponse = classesService.updateInfo(className, classesRequest);
+		return new ResponseEntity<>(classesResponse, HttpStatus.OK);
 	}
 
 	private boolean isAcademyExist(String academyUserId) {

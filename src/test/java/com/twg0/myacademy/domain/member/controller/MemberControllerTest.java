@@ -178,4 +178,28 @@ class MemberControllerTest {
 			.andExpect(jsonPath("birth").value(birth))
 			.andExpect(jsonPath("school").value("방산"));
 	}
+
+	@Test
+	public void 학원사용자삭제API() throws Exception {
+	    // given
+		final MemberRequest memberRequest = MemberRequest.builder()
+			.username("홍길동")
+			.userId("hong")
+			.password("gildong")
+			.age(18)
+			.birth(BIRTH)
+			.school("방산")
+			.build();
+
+		when(academyService.exist("seokang")).thenReturn(true);
+		when(memberService.exist("hong")).thenReturn(true);
+		// when
+		ResultActions resultActions =
+			mvc.perform(delete("/academy/{academyUserId}/member/{memberUserId}", "seokang", memberRequest.getUserId()))
+				.andDo(print());
+
+		// then
+		resultActions
+			.andExpect(status().isOk());
+	}
 }

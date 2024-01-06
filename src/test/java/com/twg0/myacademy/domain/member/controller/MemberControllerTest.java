@@ -106,7 +106,7 @@ class MemberControllerTest {
 			.birth(BIRTH)
 			.school("방산")
 			.build();
-		// when
+
 		when(academyService.exist("seokang")).thenReturn(true);
 		when(memberService.exist("hong")).thenReturn(false);
 		when(memberService.create(memberRequest, "seokang", Role.MEMBER)).thenReturn(memberResponse);
@@ -124,6 +124,57 @@ class MemberControllerTest {
 			.andExpect(jsonPath("username").value("홍길동"))
 			.andExpect(jsonPath("userId").value("hong"))
 			.andExpect(jsonPath("age").value(18))
+			.andExpect(jsonPath("birth").value(birth))
+			.andExpect(jsonPath("school").value("방산"));
+	}
+
+	@Test
+	public void 학원사용자정보수정API() throws Exception {
+		// given
+		final MemberRequest memberRequest = MemberRequest.builder()
+			.username("홍길동")
+			.userId("hong")
+			.password("gildong")
+			.age(18)
+			.birth(BIRTH)
+			.school("방산")
+			.build();
+
+		final MemberRequest memberRequest2 = MemberRequest.builder()
+			.username("고길동")
+			.userId("go")
+			.password("gildong")
+			.age(20)
+			.birth(BIRTH)
+			.school("방산")
+			.build();
+
+		final MemberResponse memberResponse = MemberResponse.builder()
+			.username("고길동")
+			.userId("go")
+			.age(20)
+			.birth(BIRTH)
+			.school("방산")
+			.build();
+
+		when(academyService.exist("seokang")).thenReturn(true);
+		when(memberService.exist("hong")).thenReturn(true);
+		when(memberService.exist("go")).thenReturn(false);
+		when(memberService.updateInfo(memberRequest2, "hong")).thenReturn(memberResponse);
+
+		// when
+		ResultActions resultActions =
+			mvc.perform(patch("/academy/{academyUserId}/member/{memberUserId}", "seokang", memberRequest.getUserId())
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(memberRequest2)))
+				.andDo(print());
+
+		// then
+		resultActions
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("username").value("고길동"))
+			.andExpect(jsonPath("userId").value("go"))
+			.andExpect(jsonPath("age").value(20))
 			.andExpect(jsonPath("birth").value(birth))
 			.andExpect(jsonPath("school").value("방산"));
 	}

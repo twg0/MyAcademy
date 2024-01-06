@@ -24,9 +24,7 @@ public class MemberService {
 
 	@Transactional
 	public MemberResponse create(MemberRequest memberRequest, String academyUserId, Role role) {
-		if(memberRepository.existsByUserId(memberRequest.getUserId())) {
-			throw new IllegalArgumentException("ID가 이미 존재합니다.");
-		}
+
 		Academy academy = academyRepository.findByAcademyUserId(academyUserId).get();
 		Member member = memberRequest.toEntity();
 		member.setAcademy(academy);
@@ -37,9 +35,7 @@ public class MemberService {
 
 	@Transactional
 	public MemberResponse updateInfo(MemberRequest memberRequest, String userId) {
-		if(memberRepository.existsByUserId(memberRequest.getUserId())) {
-			throw new IllegalArgumentException("ID가 이미 존재합니다.");
-		}
+
 		Member member = memberRepository.findByUserId(userId).get();
 		member.updateInfo(memberRequest);
 		return MemberResponse.fromEntity(member);
@@ -47,18 +43,14 @@ public class MemberService {
 
 	@Transactional
 	public void delete(String userId) {
-		if(!memberRepository.existsByUserId(userId)) {
-			throw new IllegalArgumentException("ID가 존재하지 않습니다.");
-		}
+
 		Member member = memberRepository.findByUserId(userId).get();
 		member.getAcademy().removeMembers(member);
 		memberRepository.deleteByUserId(userId);
 	}
 
 	public MemberResponse read(String userId) {
-		if(!memberRepository.existsByUserId(userId)) {
-			throw new IllegalArgumentException("ID가 존재하지 않습니다.");
-		}
+
 		Member member = memberRepository.findByUserId(userId).get();
 		return MemberResponse.fromEntity(member);
 	}

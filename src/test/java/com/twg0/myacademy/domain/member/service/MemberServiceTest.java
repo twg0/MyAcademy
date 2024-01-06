@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -132,7 +133,7 @@ class MemberServiceTest {
 		memberService.create(memberRequest, ACADEMY.getAcademyUserId(), Role.MEMBER);
 		memberService.delete(memberRequest.getUserId());
 	    // then
-		assertThrows(IllegalArgumentException.class, () ->
+		assertThrows(NoSuchElementException.class, () ->
 			memberService.read(memberRequest.getUserId()));
 	}
 }

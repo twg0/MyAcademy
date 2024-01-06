@@ -62,4 +62,8 @@ public class MemberService {
 		Member member = memberRepository.findByUserId(userId).get();
 		return MemberResponse.fromEntity(member);
 	}
+
+	public boolean exist(String userId) {
+		return memberRepository.existsByUserId(userId);
+	}
 }

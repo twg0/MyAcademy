@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -25,6 +26,7 @@ import com.twg0.myacademy.domain.classes.DTO.ClassesResponse;
 import com.twg0.myacademy.domain.classes.service.ClassesService;
 import com.twg0.myacademy.domain.member.DTO.MemberRequest;
 import com.twg0.myacademy.domain.member.DTO.MemberResponse;
+import com.twg0.myacademy.domain.member.enums.Role;
 import com.twg0.myacademy.domain.member.service.MemberService;
 
 @WebMvcTest(MemberController.class)
@@ -78,6 +80,47 @@ class MemberControllerTest {
 		// then
 		resultActions
 			.andExpect(status().isFound())
+			.andExpect(jsonPath("username").value("홍길동"))
+			.andExpect(jsonPath("userId").value("hong"))
+			.andExpect(jsonPath("age").value(18))
+			.andExpect(jsonPath("birth").value(birth))
+			.andExpect(jsonPath("school").value("방산"));
+	}
+
+	@Test
+	public void 학원사용자생성API() throws Exception {
+		// given
+		final MemberRequest memberRequest = MemberRequest.builder()
+			.username("홍길동")
+			.userId("hong")
+			.password("gildong")
+			.age(18)
+			.birth(BIRTH)
+			.school("방산")
+			.build();
+
+		final MemberResponse memberResponse = MemberResponse.builder()
+			.username("홍길동")
+			.userId("hong")
+			.age(18)
+			.birth(BIRTH)
+			.school("방산")
+			.build();
+		// when
+		when(academyService.exist("seokang")).thenReturn(true);
+		when(memberService.exist("hong")).thenReturn(false);
+		when(memberService.create(memberRequest, "seokang", Role.MEMBER)).thenReturn(memberResponse);
+
+		// when
+		ResultActions resultActions =
+			mvc.perform(post("/academy/{academyUserId}/member", "seokang")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(memberRequest)))
+				.andDo(print());
+
+		// then
+		resultActions
+			.andExpect(status().isCreated())
 			.andExpect(jsonPath("username").value("홍길동"))
 			.andExpect(jsonPath("userId").value("hong"))
 			.andExpect(jsonPath("age").value(18))

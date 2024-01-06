@@ -2,6 +2,7 @@ package com.twg0.myacademy.domain.member.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,5 +81,19 @@ public class MemberController {
 
 		MemberResponse response = memberService.updateInfo(memberRequest, memberUserId);
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	@DeleteMapping("{memberUserId}")
+	public ResponseEntity<Void> delete(
+		@PathVariable("academyUserId") String academyUserId,
+		@PathVariable("memberUserId") String memberUserId
+	) {
+		if(!isAcademyExist(academyUserId))
+			throw new AcademyNotFoundException(ErrorCode.ACADEMY_NOT_FOUND);
+		if(!isMemberExist(memberUserId))
+			throw new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
+
+		memberService.delete(memberUserId);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

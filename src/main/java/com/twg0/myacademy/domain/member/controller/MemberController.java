@@ -3,6 +3,7 @@ package com.twg0.myacademy.domain.member.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,5 +63,22 @@ public class MemberController {
 
 		MemberResponse response = memberService.create(memberRequest, academyUserId, Role.MEMBER);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+
+	@PatchMapping("{memberUserId}")
+	public ResponseEntity<MemberResponse> update(
+		@PathVariable("academyUserId") String academyUserId,
+		@PathVariable("memberUserId") String memberUserId,
+		@RequestBody MemberRequest memberRequest
+	) {
+		if(!isAcademyExist(academyUserId))
+			throw new AcademyNotFoundException(ErrorCode.ACADEMY_NOT_FOUND);
+		if(!isMemberExist(memberUserId))
+			throw new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
+		if(isMemberExist(memberRequest.getUserId()))
+			throw new DuplicatedException(ErrorCode.ID_DUPLICATED);
+
+		MemberResponse response = memberService.updateInfo(memberRequest, memberUserId);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

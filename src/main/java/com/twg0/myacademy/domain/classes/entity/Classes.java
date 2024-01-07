@@ -46,7 +46,7 @@ public class Classes extends BaseEntity {
 	private Integer countOfStudent;
 
 	@Builder
-	protected Classes(String subject, String className, String teacher, Integer countOfStudent, Academy academy) {
+	public Classes(String subject, String className, String teacher, Integer countOfStudent, Academy academy) {
 		this.subject = subject;
 		this.className = className;
 		this.teacher = teacher;
@@ -54,7 +54,6 @@ public class Classes extends BaseEntity {
 		this.academy = academy;
 	}
 
-	@Builder
 	public static Classes createClasses(String subject, String className, String teacher, Integer countOfStudent,
 		Academy academy) {
 		Classes classes = Classes.builder()

@@ -193,4 +193,21 @@ class ClassesServiceTest {
 		List<MemberClasses> memberClasses = MEMBER.getMemberClasses();
 		assertThat(memberClasses.get(0).getClasses().getClassName()).isEqualTo(response.getClassName());
 	}
+
+	@Test
+	public void 반학생삭제() throws Exception {
+		final ClassesRequest classesRequest =
+			ClassesRequest.builder()
+				.subject("수학")
+				.className("예비고1A")
+				.countOfStudent(0)
+				.teacher("kim")
+				.build();
+		// when
+		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
+		classesService.register(classesRequest.getClassName(), MEMBER.getUserId());
+		classesService.deleteMember(classesRequest.getClassName(), MEMBER.getUserId());
+		// then
+		assertThat(MEMBER.getMemberClasses().size()).isEqualTo(0);
+	}
 }

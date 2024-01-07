@@ -25,11 +25,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 	@Id
@@ -104,8 +106,8 @@ public class Member extends BaseEntity {
 		this.memberClasses.add(memberClasses);
 	}
 
-	public void removeMemberClasses(MemberClasses memberClasses) {
-		this.memberClasses.remove(memberClasses);
+	public void removeMemberClasses(String className) {
+		this.memberClasses.removeIf((a) -> a.getClasses().getClassName().equals(className));
 	}
 
 	public void addGrades(Grade grade) {
@@ -114,22 +116,5 @@ public class Member extends BaseEntity {
 
 	public void removeGrades(Grade grade) {
 		this.grades.remove(grade);
-	}
-
-	/* Override */
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Member member = (Member)o;
-		return id.equals(member.id) && userId.equals(member.userId);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(userId);
 	}
 }

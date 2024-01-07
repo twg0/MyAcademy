@@ -8,11 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.classes.entity.MemberClasses;
-import com.twg0.myacademy.domain.classes.entity.MemberClassesID;
 import com.twg0.myacademy.domain.member.entity.Member;
 
 @Repository
-public interface MemberClassesRepository extends JpaRepository<MemberClasses, MemberClassesID> {
+public interface MemberClassesRepository extends JpaRepository<MemberClasses, Long> {
 
 	Optional<MemberClasses> findByMemberAndClasses(Member member, Classes classes);
 	List<MemberClasses> findByMember(Member member);

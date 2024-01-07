@@ -8,6 +8,7 @@ import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.classes.DTO.ClassesRequest;
 import com.twg0.myacademy.domain.common.entity.BaseEntity;
 import com.twg0.myacademy.domain.exam.entity.Exam;
+import com.twg0.myacademy.domain.member.entity.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -95,8 +96,8 @@ public class Classes extends BaseEntity {
 		this.memberClasses.add(memberClasses);
 	}
 
-	public void removeMemberClasses(MemberClasses memberClasses) {
-		this.memberClasses.remove(memberClasses);
+	public void removeMemberClasses(String memberUserId) {
+		memberClasses.removeIf((a) -> a.getMember().getUserId().equals(memberUserId));
 	}
 
 	public void addExams(Exam exam) {

@@ -20,11 +20,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Classes extends BaseEntity {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +46,27 @@ public class Classes extends BaseEntity {
 	private Integer countOfStudent;
 
 	@Builder
-	public Classes(String subject, String className, String teacher, Integer countOfStudent, Academy academy) {
+	protected Classes(String subject, String className, String teacher, Integer countOfStudent, Academy academy) {
 		this.subject = subject;
 		this.className = className;
 		this.teacher = teacher;
 		this.countOfStudent = countOfStudent;
 		this.academy = academy;
+	}
+
+	@Builder
+	public static Classes createClasses(String subject, String className, String teacher, Integer countOfStudent,
+		Academy academy) {
+		Classes classes = Classes.builder()
+			.subject(subject)
+			.className(className)
+			.teacher(teacher)
+			.countOfStudent(countOfStudent)
+			.academy(academy)
+			.build();
+
+		academy.addClasses(classes);
+		return classes;
 	}
 
 	public void updateInfo(ClassesRequest classesRequest) {
@@ -91,21 +108,4 @@ public class Classes extends BaseEntity {
 		this.exams.remove(exam);
 	}
 
-	/* Override */
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Classes classes = (Classes)o;
-		return id.equals(classes.id) && subject.equals(classes.subject) && className.equals(classes.className)
-			&& teacher.equals(classes.teacher) && countOfStudent.equals(classes.countOfStudent);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(className);
-	}
 }

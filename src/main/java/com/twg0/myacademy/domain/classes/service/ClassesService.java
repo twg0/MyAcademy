@@ -93,6 +93,15 @@ public class ClassesService {
 		return ClassesResponse.fromEntity(classes);
 	}
 
+	@Transactional
+	public ClassesResponse deleteMember(String className, String memberUserId) {
+		Classes classes = classesRepository.findByClassName(className).get();
+		Member member = memberRepository.findByUserId(memberUserId).get();
+		classes.removeMemberClasses(memberUserId);
+		member.removeMemberClasses(className);
+		return ClassesResponse.fromEntity(classes);
+	}
+
 	public boolean existByClassName(String className) {
 		return classesRepository.existsByClassName(className);
 	}

@@ -13,7 +13,7 @@ public interface ClassesRepository extends JpaRepository<Classes, Long> {
 
 	Optional<Classes> findByClassName(String className);
 
-	List<Classes> findAllByClassName(String className);
+	List<Classes> findAll();
 
 	void deleteByClassName(String className);
 

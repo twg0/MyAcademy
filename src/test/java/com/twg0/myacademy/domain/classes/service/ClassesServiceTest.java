@@ -3,8 +3,12 @@ package com.twg0.myacademy.domain.classes.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,10 @@ import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
 import com.twg0.myacademy.domain.classes.DTO.ClassesRequest;
 import com.twg0.myacademy.domain.classes.DTO.ClassesResponse;
+import com.twg0.myacademy.domain.classes.entity.MemberClasses;
+import com.twg0.myacademy.domain.member.entity.Member;
+import com.twg0.myacademy.domain.member.enums.Role;
+import com.twg0.myacademy.domain.member.repository.MemberRepository;
 
 @SpringBootTest
 @Transactional
@@ -26,7 +34,12 @@ class ClassesServiceTest {
 	@Autowired
 	private AcademyRepository academyRepository;
 
+	@Autowired
+	private MemberRepository memberRepository;
+
 	private Academy ACADEMY;
+	private Member MEMBER;
+	private LocalDateTime BIRTH;
 	@BeforeEach
 	public void setUp() {
 		final Academy academy = Academy.builder()
@@ -39,6 +52,21 @@ class ClassesServiceTest {
 			.build();
 		ACADEMY = academy;
 		academyRepository.save(academy);
+
+		BIRTH = LocalDateTime.of(1996, 8, 25, 0, 0).atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
+
+		final Member member = Member.builder()
+			.username("홍길동")
+			.userId("hong")
+			.password("gildong")
+			.age(18)
+			.birth(BIRTH)
+			.school("방산")
+			.role(Role.MEMBER)
+			.academy(ACADEMY)
+			.build();
+
+		MEMBER = memberRepository.save(member);
 	}
 
 	@Test
@@ -147,5 +175,22 @@ class ClassesServiceTest {
 		// then
 		assertThrows(NoSuchElementException.class, () ->
 			classesService.read(classesRequest.getClassName()));
+	}
+
+	@Test
+	public void 반학생등록() throws Exception {
+		final ClassesRequest classesRequest =
+			ClassesRequest.builder()
+				.subject("수학")
+				.className("예비고1A")
+				.countOfStudent(0)
+				.teacher("kim")
+				.build();
+		// when
+		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
+		ClassesResponse response = classesService.register(classesRequest.getClassName(), MEMBER.getUserId());
+		// then
+		List<MemberClasses> memberClasses = MEMBER.getMemberClasses();
+		assertThat(memberClasses.get(0).getClasses().getClassName()).isEqualTo(response.getClassName());
 	}
 }

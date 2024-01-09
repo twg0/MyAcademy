@@ -96,8 +96,8 @@ public class Classes extends BaseEntity {
 		this.memberClasses.add(memberClasses);
 	}
 
-	public void removeMemberClasses(String memberUserId) {
-		memberClasses.removeIf((a) -> a.getMember().getUserId().equals(memberUserId));
+	public void removeMemberClasses(Long id) {
+		memberClasses.removeIf((a) -> a.getId().equals(id));
 	}
 
 	public void addExams(Exam exam) {

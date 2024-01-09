@@ -58,4 +58,8 @@ public class ExamService {
 		Exam exam = examRepository.findByDateName(dateName).get();
 		return ExamResponse.fromEntity(exam);
 	}
+
+	public boolean existsByDateName(String dateName) {
+		return examRepository.findByDateName(dateName).isPresent();
+	}
 }

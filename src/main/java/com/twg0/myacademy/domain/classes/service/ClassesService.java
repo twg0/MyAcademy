@@ -27,6 +27,11 @@ public class ClassesService {
 	private final AcademyRepository academyRepository;
 	private final MemberRepository memberRepository;
 
+
+	/*
+	반 관련 메소드
+	 */
+
 	/**
 	 * 반 생성
 	 * @param classesRequest
@@ -84,6 +89,10 @@ public class ClassesService {
 		List<Classes> classesList = classesRepository.findAll();
 		return classesList.stream().map(ClassesResponse::fromEntity).toList();
 	}
+
+	/*
+	반-학생 관련 메소드
+	 */
 
 	@Transactional
 	public ClassesResponse register(String className, String memberUserId) {

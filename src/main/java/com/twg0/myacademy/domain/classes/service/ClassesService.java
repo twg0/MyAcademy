@@ -94,15 +94,19 @@ public class ClassesService {
 	}
 
 	@Transactional
-	public ClassesResponse deleteMember(String className, String memberUserId) {
+	public ClassesResponse deleteMember(String className, String memberUserId, Long memberClassesId) {
 		Classes classes = classesRepository.findByClassName(className).get();
 		Member member = memberRepository.findByUserId(memberUserId).get();
-		classes.removeMemberClasses(memberUserId);
-		member.removeMemberClasses(className);
+		classes.removeMemberClasses(memberClassesId);
+		member.removeMemberClasses(memberClassesId);
 		return ClassesResponse.fromEntity(classes);
 	}
 
 	public boolean existByClassName(String className) {
-		return classesRepository.existsByClassName(className);
+		return classesRepository.findByClassName(className).isPresent();
+	}
+
+	public boolean existByMemberUserId(String memberUserId) {
+		return memberRepository.findByUserId(memberUserId).isPresent();
 	}
 }

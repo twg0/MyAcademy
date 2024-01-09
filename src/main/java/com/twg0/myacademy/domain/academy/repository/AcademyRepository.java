@@ -13,6 +13,4 @@ public interface AcademyRepository extends JpaRepository<Academy, Long> {
 	Optional<Academy> findByAcademyUserId(final String academyUserId);
 
 	void deleteByAcademyUserId(final String academyUserId);
-
-	boolean existsByAcademyUserId(final String academyUserId);
 }

@@ -27,20 +27,20 @@ public class Grade extends BaseEntity {
 	@Column(name = "grades_id")
 	private Long id;
 
-	@Column(unique = true)
-	private String memberExam;
-
 	@Lob
 	private String score;
 
-	@Builder
-	public Grade(String score, Member member, Exam exam) {
-		this.memberExam = member.getUserId() + exam.getDateName();
+	protected Grade(String score, Member member, Exam exam) {
 		this.score = score;
 		this.member = member;
-		member.addGrades(this);
 		this.exam = exam;
-		exam.addGrades(this);
+	}
+
+	public static Grade createGrade(String score, Member member, Exam exam) {
+		Grade grade = new Grade(score, member, exam);
+		member.addGrades(grade);
+		exam.addGrades(grade);
+		return grade;
 	}
 
 	public void update(String score) {

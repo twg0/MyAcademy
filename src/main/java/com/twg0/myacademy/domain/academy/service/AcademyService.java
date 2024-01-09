@@ -50,6 +50,6 @@ public class AcademyService {
 	}
 
 	public boolean exist(String academyUserId) {
-		return academyRepository.existsByAcademyUserId(academyUserId);
+		return academyRepository.findByAcademyUserId(academyUserId).isPresent();
 	}
 }

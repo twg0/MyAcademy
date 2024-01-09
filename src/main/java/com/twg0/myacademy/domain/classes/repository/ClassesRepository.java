@@ -16,6 +16,4 @@ public interface ClassesRepository extends JpaRepository<Classes, Long> {
 	List<Classes> findAll();
 
 	void deleteByClassName(String className);
-
-	boolean existsByClassName(String className);
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.twg0.myacademy.domain.classes.entity.Classes;
 
 @Repository
-public interface ClassesRepository extends JpaRepository<Classes, Long> {
+public interface ClassesRepository extends JpaRepository<Classes, Long>, CustomClassesRepository {
 
 	Optional<Classes> findByClassName(String className);
 

@@ -23,10 +23,6 @@ public class ExamService {
 
 	@Transactional
 	public ExamResponse create(String className, ExamRequest examRequest) {
-		if (!classesRepository.existsByClassName(className))
-			throw new IllegalArgumentException("반이 존재하지 않습니다.");
-		if(examRepository.existsByDateName(examRequest.getDateName()))
-			throw new IllegalArgumentException("해당 시험이 이미 존재한다.");
 		Classes classes = classesRepository.findByClassName(className).get();
 		Exam exam = examRequest.toEntity();
 		exam.setClasses(classes);
@@ -36,8 +32,6 @@ public class ExamService {
 
 	@Transactional
 	public ExamResponse updateInfo(ExamRequest examRequest, String dateName) {
-		if(!examRepository.existsByDateName(dateName))
-			throw new IllegalArgumentException("해당 시험이 존재하지 않습니다.");
 		Exam exam = examRepository.findByDateName(dateName).get();
 		exam.updateInfo(examRequest);
 		return ExamResponse.fromEntity(exam);
@@ -45,16 +39,12 @@ public class ExamService {
 
 	@Transactional
 	public void delete(String dateName) {
-		if(!examRepository.existsByDateName(dateName))
-			throw new IllegalArgumentException("해당 시험이 존재하지 않습니다.");
 		Exam exam = examRepository.findByDateName(dateName).get();
 		exam.getClasses().removeExams(exam);
 		examRepository.deleteByDateName(dateName);
 	}
 
 	public ExamResponse read(String dateName) {
-		if(!examRepository.existsByDateName(dateName))
-			throw new IllegalArgumentException("해당 시험이 존재하지 않습니다.");
 		Exam exam = examRepository.findByDateName(dateName).get();
 		return ExamResponse.fromEntity(exam);
 	}

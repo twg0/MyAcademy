@@ -1,50 +1,40 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-import MainHome from "@/components/MainHome.vue";
-</script>
-
 <template>
     <header>
-        <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125"/>
-
-        <div class="wrapper">
-            <HelloWorld msg="You did it!"/>
-        </div>
+        <HeaderBar/>
     </header>
-
-    <main>
+    <body>
         <MainHome/>
-    </main>
-
-
+    </body>
+    <!-- Other components or content -->
 </template>
+
+<script>
+import HeaderBar from "@/components/HeaderBar.vue";
+import MainHome from "@/components/MainHome.vue";
+
+export default {
+    components: {
+        MainHome,
+        HeaderBar
+    }
+};
+</script>
 
 <style scoped>
 header {
-    line-height: 1.5;
+    width: 100%;
+    background-color: #f6f5f0;
+    border-bottom: 1px solid #c8c8c8;
+    /* position: relative; fixed가 있으니 필요가 없음 */
+    position: fixed;
+    top: 0;
+    z-index: 9;
 }
-
-.logo {
-    display: block;
-    margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-    header {
-        display: flex;
-        place-items: center;
-        padding-right: calc(var(--section-gap) / 2);
-    }
-
-    .logo {
-        margin: 0 2rem 0 0;
-    }
-
-    header .wrapper {
-        display: flex;
-        place-items: flex-start;
-        flex-wrap: wrap;
-    }
+body {
+    margin: 0 0;
+    width: 100%;
+    top: 120px;
+    position: fixed;
+    background-color: #2c2a29;
 }
 </style>

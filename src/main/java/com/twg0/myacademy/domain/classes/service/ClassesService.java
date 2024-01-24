@@ -106,11 +106,13 @@ public class ClassesService {
 	}
 
 	@Transactional
-	public ClassesResponse deleteMember(String className, String memberUserId, Long memberClassesId) {
+	public ClassesResponse deleteMember(String className, String memberUserId) {
 		Classes classes = classesRepository.findByClassName(className).get();
 		Member member = memberRepository.findByUserId(memberUserId).get();
-		classes.removeMemberClasses(memberClassesId);
-		member.removeMemberClasses(memberClassesId);
+		MemberClasses memberClasses = memberClassesRepository.findByMemberAndClasses(member, classes).get();
+		classes.removeMemberClasses(memberClasses);
+		member.removeMemberClasses(memberClasses);
+		memberClassesRepository.delete(memberClasses);
 		return ClassesResponse.fromEntity(classes);
 	}
 

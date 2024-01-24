@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -125,7 +126,7 @@ class ExamServiceTest {
 		examService.create(CLASSES.getClassName(), examRequest);
 	    examService.delete(examRequest.getDateName());
 	    // then
-		assertThrows(IllegalArgumentException.class, () ->
+		assertThrows(NoSuchElementException.class, () ->
 			examService.delete(examRequest.getDateName()));
 	}
 }

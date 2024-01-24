@@ -206,8 +206,52 @@ class ClassesServiceTest {
 		// when
 		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
 		classesService.register(classesRequest.getClassName(), MEMBER.getUserId());
-		classesService.deleteMember(classesRequest.getClassName(), MEMBER.getUserId());
+		classesService.deleteMember(classesRequest.getClassName(), MEMBER.getUserId(), 0L);
 		// then
 		assertThat(MEMBER.getMemberClasses().size()).isEqualTo(0);
+	}
+
+	@Test
+	public void 학생이속한반조회() throws Exception {
+	    // given
+		final ClassesRequest classesRequest =
+			ClassesRequest.builder()
+				.subject("수학")
+				.className("예비고1A수학")
+				.countOfStudent(0)
+				.teacher("kim")
+				.build();
+
+		final ClassesRequest classesRequest2 =
+			ClassesRequest.builder()
+				.subject("영어")
+				.className("예비고1A영어")
+				.countOfStudent(0)
+				.teacher("kim")
+				.build();
+
+		final ClassesRequest classesRequest3 =
+			ClassesRequest.builder()
+				.subject("과학")
+				.className("예비고1A과학")
+				.countOfStudent(0)
+				.teacher("kim")
+				.build();
+	    // when
+		ClassesResponse classesResponse = classesService.create(classesRequest, ACADEMY.getAcademyUserId());
+		ClassesResponse classesResponse1 = classesService.create(classesRequest2, ACADEMY.getAcademyUserId());
+		ClassesResponse classesResponse2 = classesService.create(classesRequest3, ACADEMY.getAcademyUserId());
+
+		System.out.println("학생등록");
+		classesService.register(classesRequest.getClassName(), MEMBER.getUserId());
+		classesService.register(classesRequest2.getClassName(), MEMBER.getUserId());
+		classesService.register(classesRequest3.getClassName(), MEMBER.getUserId());
+
+	    // then
+		System.out.println("학생조회");
+		List<ClassesResponse> allByMemerUserId = classesService.findAllByMemerUserId(MEMBER.getUserId());
+		assertThat(allByMemerUserId.contains(classesResponse)).isTrue();
+		assertThat(allByMemerUserId.contains(classesResponse1)).isTrue();
+		assertThat(allByMemerUserId.contains(classesResponse2)).isTrue();
 	}
 }

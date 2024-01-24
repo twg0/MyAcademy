@@ -106,8 +106,8 @@ public class Member extends BaseEntity {
 		this.memberClasses.add(memberClasses);
 	}
 
-	public void removeMemberClasses(Long id) {
-		this.memberClasses.removeIf((a) -> a.getId().equals(id));
+	public void removeMemberClasses(MemberClasses mc) {
+		this.memberClasses.remove(mc);
 	}
 
 	public void addGrades(Grade grade) {

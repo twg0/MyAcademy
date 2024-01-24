@@ -28,19 +28,13 @@ import com.twg0.myacademy.domain.member.service.MemberService;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 
-@EnableJpaAuditing
 @SpringBootApplication
-@RequiredArgsConstructor
 public class MyAcademyApplication {
-	private final EntityManager entityManager;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyAcademyApplication.class, args);
-	}
-	@Bean
-	public JPAQueryFactory jpaQueryFactory() {
-		return new JPAQueryFactory(entityManager);
 	}
 }

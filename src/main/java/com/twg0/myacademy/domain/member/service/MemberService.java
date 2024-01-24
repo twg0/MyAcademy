@@ -1,10 +1,15 @@
 package com.twg0.myacademy.domain.member.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.twg0.myacademy.domain.academy.entity.Academy;
 import com.twg0.myacademy.domain.academy.repository.AcademyRepository;
+import com.twg0.myacademy.domain.classes.DTO.ClassesRequest;
+import com.twg0.myacademy.domain.classes.entity.Classes;
+import com.twg0.myacademy.domain.classes.repository.ClassesRepository;
 import com.twg0.myacademy.domain.member.DTO.MemberRequest;
 import com.twg0.myacademy.domain.member.DTO.MemberResponse;
 import com.twg0.myacademy.domain.member.entity.Member;
@@ -21,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	private final MemberRepository memberRepository;
 	private final AcademyRepository academyRepository;
+	private final ClassesRepository classesRepository;
 
 	@Transactional
 	public MemberResponse create(MemberRequest memberRequest, String academyUserId, Role role) {
@@ -53,6 +59,12 @@ public class MemberService {
 
 		Member member = memberRepository.findByUserId(userId).get();
 		return MemberResponse.fromEntity(member);
+	}
+
+	public List<MemberResponse> findByClassName(String className) {
+		Classes classes = classesRepository.findByClassName(className).get();
+		List<Member> members = classes.getMemberClasses().stream().map(o -> o.getMember()).toList();
+		return members.stream().map(MemberResponse::fromEntity).toList();
 	}
 
 	public boolean exist(String userId) {

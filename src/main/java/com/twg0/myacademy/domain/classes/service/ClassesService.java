@@ -12,6 +12,8 @@ import com.twg0.myacademy.domain.classes.DTO.ClassesResponse;
 import com.twg0.myacademy.domain.classes.entity.Classes;
 import com.twg0.myacademy.domain.classes.entity.MemberClasses;
 import com.twg0.myacademy.domain.classes.repository.ClassesRepository;
+import com.twg0.myacademy.domain.classes.repository.MemberClassesRepository;
+import com.twg0.myacademy.domain.member.DTO.MemberResponse;
 import com.twg0.myacademy.domain.member.entity.Member;
 import com.twg0.myacademy.domain.member.repository.MemberRepository;
 
@@ -26,6 +28,7 @@ public class ClassesService {
 	private final ClassesRepository classesRepository;
 	private final AcademyRepository academyRepository;
 	private final MemberRepository memberRepository;
+	private final MemberClassesRepository memberClassesRepository;
 
 
 	/*
@@ -91,14 +94,14 @@ public class ClassesService {
 	}
 
 	/*
-	반-학생 관련 메소드
+	반-멤버 관련 메소드
 	 */
 
 	@Transactional
 	public ClassesResponse register(String className, String memberUserId) {
 		Classes classes = classesRepository.findByClassName(className).get();
 		Member member = memberRepository.findByUserId(memberUserId).get();
-		MemberClasses.createMemberClasses(member, classes);
+		memberClassesRepository.save(MemberClasses.createMemberClasses(member, classes));
 		return ClassesResponse.fromEntity(classes);
 	}
 
@@ -109,6 +112,15 @@ public class ClassesService {
 		classes.removeMemberClasses(memberClassesId);
 		member.removeMemberClasses(memberClassesId);
 		return ClassesResponse.fromEntity(classes);
+	}
+
+	/**
+	 * 해당 학생이 포함된 모든 반 조회
+	 */
+	public List<ClassesResponse> findAllByMemerUserId(String memberUserId) {
+		Member member = memberRepository.findByUserId(memberUserId).get();
+		List<Classes> classes = member.getMemberClasses().stream().map(MemberClasses::getClasses).toList();
+		return classes.stream().map(ClassesResponse::fromEntity).toList();
 	}
 
 	public boolean existByClassName(String className) {

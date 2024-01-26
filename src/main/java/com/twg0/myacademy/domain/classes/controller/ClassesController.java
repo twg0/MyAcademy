@@ -1,5 +1,7 @@
 package com.twg0.myacademy.domain.classes.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,11 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.twg0.myacademy.domain.academy.service.AcademyService;
 import com.twg0.myacademy.domain.classes.DTO.ClassesRequest;
 import com.twg0.myacademy.domain.classes.DTO.ClassesResponse;
+import com.twg0.myacademy.domain.classes.entity.MemberClasses;
 import com.twg0.myacademy.domain.classes.service.ClassesService;
 import com.twg0.myacademy.domain.common.exception.ErrorCode;
 import com.twg0.myacademy.domain.common.exception.entitynotfound.AcademyNotFoundException;
 import com.twg0.myacademy.domain.common.exception.entitynotfound.ClassesNotFoundException;
+import com.twg0.myacademy.domain.common.exception.entitynotfound.MemberNotFoundException;
 import com.twg0.myacademy.domain.common.exception.invalidvalue.DuplicatedException;
+import com.twg0.myacademy.domain.member.DTO.MemberResponse;
+import com.twg0.myacademy.domain.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class ClassesController {
 	private final AcademyService academyService;
 	private final ClassesService classesService;
+	private final MemberService memberService;
 
 	@GetMapping("{className}")
 	public ResponseEntity<ClassesResponse> findOne(
@@ -97,11 +104,44 @@ public class ClassesController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	/*
+	반-학생 관련 핸들러
+	 */
+	@PostMapping("{className}/member/{memberUserId}")
+	public ResponseEntity<ClassesResponse> register(
+		@PathVariable("academyUserId") String academyUserId,
+		@PathVariable("className") String className,
+		@PathVariable("memberUserId") String memberUserId
+	) {
+		if (!isAcademyExist(academyUserId)) {
+			throw new AcademyNotFoundException(ErrorCode.ACADEMY_NOT_FOUND);
+		}
+		if (!isClassesExist(className)) {
+			throw new ClassesNotFoundException(ErrorCode.CLASSES_NOT_FOUND);
+		}
+		if (!isMemberExist(memberUserId)) {
+			throw new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
+		}
+		if(isMemberClassesExist(academyUserId, className, memberUserId)) {
+			throw new DuplicatedException(ErrorCode.MEMBER_CLASSES_DUPLICATED);
+		}
+		ClassesResponse response = classesService.register(className, memberUserId, academyUserId);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
 	private boolean isAcademyExist(String academyUserId) {
 		return academyService.exist(academyUserId);
 	}
 
 	private boolean isClassesExist(String className) {
 		return classesService.existByClassName(className);
+	}
+
+	private boolean isMemberClassesExist(String academyUserId, String className, String memberUserId) {
+		return classesService.existByClassNameAndMemberAndAcademyUserId(className, memberUserId, academyUserId);
+	}
+
+	private boolean isMemberExist(String memberUserId) {
+		return memberService.exist(memberUserId);
 	}
 }

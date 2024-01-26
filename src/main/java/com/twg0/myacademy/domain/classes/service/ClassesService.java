@@ -98,18 +98,18 @@ public class ClassesService {
 	 */
 
 	@Transactional
-	public ClassesResponse register(String className, String memberUserId) {
+	public ClassesResponse register(String className, String memberUserId, String academyUserId) {
 		Classes classes = classesRepository.findByClassName(className).get();
 		Member member = memberRepository.findByUserId(memberUserId).get();
-		memberClassesRepository.save(MemberClasses.createMemberClasses(member, classes));
+		memberClassesRepository.save(MemberClasses.createMemberClasses(academyUserId, member, classes));
 		return ClassesResponse.fromEntity(classes);
 	}
 
 	@Transactional
-	public ClassesResponse deleteMember(String className, String memberUserId) {
+	public ClassesResponse deleteMember(String className, String memberUserId, String academyUserId) {
 		Classes classes = classesRepository.findByClassName(className).get();
 		Member member = memberRepository.findByUserId(memberUserId).get();
-		MemberClasses memberClasses = memberClassesRepository.findByMemberAndClasses(member, classes).get();
+		MemberClasses memberClasses = memberClassesRepository.findByMemberAndClassesAndAcademyUserId(member, classes, academyUserId).get();
 		classes.removeMemberClasses(memberClasses);
 		member.removeMemberClasses(memberClasses);
 		memberClassesRepository.delete(memberClasses);
@@ -125,11 +125,14 @@ public class ClassesService {
 		return classes.stream().map(ClassesResponse::fromEntity).toList();
 	}
 
-	public boolean existByClassName(String className) {
-		return classesRepository.findByClassName(className).isPresent();
+	public boolean existByClassNameAndMemberAndAcademyUserId(String className, String memberUserId, String academyUserId) {
+		Classes classes = classesRepository.findByClassName(className).get();
+		Member member = memberRepository.findByUserId(memberUserId).get();
+		return memberClassesRepository.findByMemberAndClassesAndAcademyUserId(member, classes, academyUserId)
+			.isPresent();
 	}
 
-	public boolean existByMemberUserId(String memberUserId) {
-		return memberRepository.findByUserId(memberUserId).isPresent();
+	public boolean existByClassName(String className) {
+		return classesRepository.findByClassName(className).isPresent();
 	}
 }

@@ -30,6 +30,8 @@ public class MemberClasses extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String academyUserId;
+
 	/* 연관관계 설정 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
@@ -39,13 +41,15 @@ public class MemberClasses extends BaseEntity {
 	@JoinColumn(name = "classes_id")
 	private Classes classes;
 
-	protected MemberClasses(Member member, Classes classes) {
+
+	protected MemberClasses(String academyUserId, Member member, Classes classes) {
+		this.academyUserId = academyUserId;
 		this.member = member;
 		this.classes = classes;
 	}
 
-	public static MemberClasses createMemberClasses(Member member, Classes classes) {
-		MemberClasses memberClasses = new MemberClasses(member, classes);
+	public static MemberClasses createMemberClasses(String academyUserId, Member member, Classes classes) {
+		MemberClasses memberClasses = new MemberClasses(academyUserId, member, classes);
 		member.addMemberClasses(memberClasses);
 		classes.addMemberClasses(memberClasses);
 		return memberClasses;

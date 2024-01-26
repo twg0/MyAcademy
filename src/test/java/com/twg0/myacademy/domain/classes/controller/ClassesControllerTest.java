@@ -202,8 +202,8 @@ class ClassesControllerTest {
 		when(academyService.exist(academyUserId)).thenReturn(true);
 		when(classesService.existByClassName(className)).thenReturn(true);
 		when(memberService.exist(memberUserId)).thenReturn(true);
-		when(classesService.existByClassNameAndMemberAndAcademyUserId(className, memberUserId, academyUserId)).thenReturn(false);
-		when(classesService.register(className, memberUserId, academyUserId)).thenReturn(classesResponse);
+		when(classesService.existByClassNameAndMember(className, memberUserId)).thenReturn(false);
+		when(classesService.register(className, memberUserId)).thenReturn(classesResponse);
 	    // when
 
 		ResultActions resultActions =

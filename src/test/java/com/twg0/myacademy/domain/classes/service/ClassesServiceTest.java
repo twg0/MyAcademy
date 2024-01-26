@@ -188,7 +188,7 @@ class ClassesServiceTest {
 				.build();
 		// when
 		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
-		ClassesResponse response = classesService.register(classesRequest.getClassName(), MEMBER.getUserId(), ACADEMY.getAcademyUserId());
+		ClassesResponse response = classesService.register(classesRequest.getClassName(), MEMBER.getUserId());
 		// then
 		List<MemberClasses> memberClasses = MEMBER.getMemberClasses();
 		assertThat(memberClasses.get(0).getClasses().getClassName()).isEqualTo(response.getClassName());
@@ -205,8 +205,8 @@ class ClassesServiceTest {
 				.build();
 		// when
 		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
-		classesService.register(classesRequest.getClassName(), MEMBER.getUserId(), ACADEMY.getAcademyUserId());
-		classesService.deleteMember(classesRequest.getClassName(), MEMBER.getUserId(), ACADEMY.getAcademyUserId());
+		classesService.register(classesRequest.getClassName(), MEMBER.getUserId());
+		classesService.deleteMember(classesRequest.getClassName(), MEMBER.getUserId());
 		// then
 		assertThat(MEMBER.getMemberClasses().size()).isEqualTo(0);
 	}
@@ -243,9 +243,9 @@ class ClassesServiceTest {
 		ClassesResponse classesResponse2 = classesService.create(classesRequest3, ACADEMY.getAcademyUserId());
 
 		System.out.println("학생등록");
-		classesService.register(classesRequest.getClassName(), MEMBER.getUserId(), ACADEMY.getAcademyUserId());
-		classesService.register(classesRequest2.getClassName(), MEMBER.getUserId(), ACADEMY.getAcademyUserId());
-		classesService.register(classesRequest3.getClassName(), MEMBER.getUserId(), ACADEMY.getAcademyUserId());
+		classesService.register(classesRequest.getClassName(), MEMBER.getUserId());
+		classesService.register(classesRequest2.getClassName(), MEMBER.getUserId());
+		classesService.register(classesRequest3.getClassName(), MEMBER.getUserId());
 
 	    // then
 		System.out.println("학생조회");

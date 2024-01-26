@@ -12,5 +12,5 @@ import com.twg0.myacademy.domain.member.entity.Member;
 @Repository
 public interface MemberClassesRepository extends JpaRepository<MemberClasses, Long> {
 
-	Optional<MemberClasses> findByMemberAndClassesAndAcademyUserId(Member member, Classes classes, String academyUserId);
+	Optional<MemberClasses> findByMemberAndClasses(Member member, Classes classes);
 }

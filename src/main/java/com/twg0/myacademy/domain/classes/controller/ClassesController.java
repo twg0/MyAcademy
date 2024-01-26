@@ -122,10 +122,10 @@ public class ClassesController {
 		if (!isMemberExist(memberUserId)) {
 			throw new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
 		}
-		if(isMemberClassesExist(academyUserId, className, memberUserId)) {
+		if(isMemberClassesExist(className, memberUserId)) {
 			throw new DuplicatedException(ErrorCode.MEMBER_CLASSES_DUPLICATED);
 		}
-		ClassesResponse response = classesService.register(className, memberUserId, academyUserId);
+		ClassesResponse response = classesService.register(className, memberUserId);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -137,8 +137,8 @@ public class ClassesController {
 		return classesService.existByClassName(className);
 	}
 
-	private boolean isMemberClassesExist(String academyUserId, String className, String memberUserId) {
-		return classesService.existByClassNameAndMemberAndAcademyUserId(className, memberUserId, academyUserId);
+	private boolean isMemberClassesExist(String className, String memberUserId) {
+		return classesService.existByClassNameAndMember(className, memberUserId);
 	}
 
 	private boolean isMemberExist(String memberUserId) {

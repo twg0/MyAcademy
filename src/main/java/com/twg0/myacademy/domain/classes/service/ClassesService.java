@@ -98,18 +98,18 @@ public class ClassesService {
 	 */
 
 	@Transactional
-	public ClassesResponse register(String className, String memberUserId, String academyUserId) {
+	public ClassesResponse register(String className, String memberUserId) {
 		Classes classes = classesRepository.findByClassName(className).get();
 		Member member = memberRepository.findByUserId(memberUserId).get();
-		memberClassesRepository.save(MemberClasses.createMemberClasses(academyUserId, member, classes));
+		memberClassesRepository.save(MemberClasses.createMemberClasses(member, classes));
 		return ClassesResponse.fromEntity(classes);
 	}
 
 	@Transactional
-	public ClassesResponse deleteMember(String className, String memberUserId, String academyUserId) {
+	public ClassesResponse deleteMember(String className, String memberUserId) {
 		Classes classes = classesRepository.findByClassName(className).get();
 		Member member = memberRepository.findByUserId(memberUserId).get();
-		MemberClasses memberClasses = memberClassesRepository.findByMemberAndClassesAndAcademyUserId(member, classes, academyUserId).get();
+		MemberClasses memberClasses = memberClassesRepository.findByMemberAndClasses(member, classes).get();
 		classes.removeMemberClasses(memberClasses);
 		member.removeMemberClasses(memberClasses);
 		memberClassesRepository.delete(memberClasses);
@@ -125,10 +125,10 @@ public class ClassesService {
 		return classes.stream().map(ClassesResponse::fromEntity).toList();
 	}
 
-	public boolean existByClassNameAndMemberAndAcademyUserId(String className, String memberUserId, String academyUserId) {
+	public boolean existByClassNameAndMember(String className, String memberUserId) {
 		Classes classes = classesRepository.findByClassName(className).get();
 		Member member = memberRepository.findByUserId(memberUserId).get();
-		return memberClassesRepository.findByMemberAndClassesAndAcademyUserId(member, classes, academyUserId)
+		return memberClassesRepository.findByMemberAndClasses(member, classes)
 			.isPresent();
 	}
 

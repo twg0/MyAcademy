@@ -180,8 +180,8 @@ class MemberServiceTest {
 	    // when
 		MemberResponse memberResponse = memberService.create(memberRequest, ACADEMY.getAcademyUserId(), Role.MEMBER);
 		MemberResponse memberResponse2 = memberService.create(memberRequest2, ACADEMY.getAcademyUserId(), Role.MEMBER);
-		classesService.register(CLASSES.getClassName(), memberRequest.getUserId());
-		classesService.register(CLASSES.getClassName(), memberRequest2.getUserId());
+		classesService.register(CLASSES.getClassName(), memberRequest.getUserId(), ACADEMY.getAcademyUserId());
+		classesService.register(CLASSES.getClassName(), memberRequest2.getUserId(), ACADEMY.getAcademyUserId());
 
 		List<MemberResponse> memberResponseList = memberService.findByClassName(CLASSES.getClassName());
 		// then

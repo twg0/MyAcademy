@@ -12,7 +12,7 @@ public enum ErrorCode {
 	// Member
 	MEMBER_NOT_FOUND("MEMBER_001", "해당 사용자를 찾을 수 없습니다.", 404),
 	// MemberClasses
-
+	MEMBER_CLASSES_DUPLICATED("MC_001", "중복된 등록입니다.", 404),
 	// Exam
 	EXAM_NOT_FOUND("EXAM_001", "해당 시험을 찾을 수 없습니다.", 404),
 	// Grade

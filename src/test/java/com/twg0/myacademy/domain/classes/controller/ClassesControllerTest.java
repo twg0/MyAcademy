@@ -19,6 +19,7 @@ import com.twg0.myacademy.domain.academy.service.AcademyService;
 import com.twg0.myacademy.domain.classes.DTO.ClassesRequest;
 import com.twg0.myacademy.domain.classes.DTO.ClassesResponse;
 import com.twg0.myacademy.domain.classes.service.ClassesService;
+import com.twg0.myacademy.domain.member.service.MemberService;
 
 @WebMvcTest(ClassesController.class)
 @MockBean(JpaMetamodelMappingContext.class) // JpaAuditing으로 인해 발생하는 오류 처리
@@ -29,6 +30,9 @@ class ClassesControllerTest {
 
 	@MockBean
 	private AcademyService academyService;
+
+	@MockBean
+	private MemberService memberService;
 
 	@MockBean
 	private ClassesService classesService;
@@ -175,5 +179,44 @@ class ClassesControllerTest {
 	    // then
 		resultActions
 			.andExpect(status().isOk());
+	}
+
+	/*
+	 반-학생 컨트롤러
+	 */
+	@Test
+	public void 학생등록API() throws Exception {
+	    // given
+		String academyUserId = "seokang";
+		String className = "예비고1A과학";
+		String memberUserId = "hong";
+
+		final ClassesResponse classesResponse =
+			ClassesResponse.builder()
+				.subject("과학")
+				.className("예비고1A과학")
+				.countOfStudent(10)
+				.teacher("Choi")
+				.build();
+
+		when(academyService.exist(academyUserId)).thenReturn(true);
+		when(classesService.existByClassName(className)).thenReturn(true);
+		when(memberService.exist(memberUserId)).thenReturn(true);
+		when(classesService.existByClassNameAndMemberAndAcademyUserId(className, memberUserId, academyUserId)).thenReturn(false);
+		when(classesService.register(className, memberUserId, academyUserId)).thenReturn(classesResponse);
+	    // when
+
+		ResultActions resultActions =
+			mvc.perform(
+					post("/academy/{academyUserId}/classes/{className}/member/{memberUserId}", academyUserId, className,
+						memberUserId))
+				.andDo(print());
+	    // then
+		resultActions
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("subject").value("과학"))
+			.andExpect(jsonPath("className").value("예비고1A과학"))
+			.andExpect(jsonPath("countOfStudent").value(10))
+			.andExpect(jsonPath("teacher").value("Choi"));
 	}
 }

@@ -206,7 +206,7 @@ class ClassesServiceTest {
 		// when
 		classesService.create(classesRequest, ACADEMY.getAcademyUserId());
 		classesService.register(classesRequest.getClassName(), MEMBER.getUserId());
-		classesService.deleteMember(classesRequest.getClassName(), MEMBER.getUserId());
+		classesService.unregister(classesRequest.getClassName(), MEMBER.getUserId());
 		// then
 		assertThat(MEMBER.getMemberClasses().size()).isEqualTo(0);
 	}

@@ -106,7 +106,7 @@ public class ClassesService {
 	}
 
 	@Transactional
-	public ClassesResponse deleteMember(String className, String memberUserId) {
+	public ClassesResponse unregister(String className, String memberUserId) {
 		Classes classes = classesRepository.findByClassName(className).get();
 		Member member = memberRepository.findByUserId(memberUserId).get();
 		MemberClasses memberClasses = memberClassesRepository.findByMemberAndClasses(member, classes).get();

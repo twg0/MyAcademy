@@ -21,6 +21,7 @@ import com.twg0.myacademy.domain.classes.service.ClassesService;
 import com.twg0.myacademy.domain.common.exception.ErrorCode;
 import com.twg0.myacademy.domain.common.exception.entitynotfound.AcademyNotFoundException;
 import com.twg0.myacademy.domain.common.exception.entitynotfound.ClassesNotFoundException;
+import com.twg0.myacademy.domain.common.exception.entitynotfound.MemberClassesNotFoundException;
 import com.twg0.myacademy.domain.common.exception.entitynotfound.MemberNotFoundException;
 import com.twg0.myacademy.domain.common.exception.invalidvalue.DuplicatedException;
 import com.twg0.myacademy.domain.member.DTO.MemberResponse;
@@ -127,6 +128,28 @@ public class ClassesController {
 		}
 		ClassesResponse response = classesService.register(className, memberUserId);
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	@DeleteMapping("{className}/member/{memberUserId}")
+	public ResponseEntity<Void> unregister(
+		@PathVariable("academyUserId") String academyUserId,
+		@PathVariable("className") String className,
+		@PathVariable("memberUserId") String memberUserId
+	) {
+		if (!isAcademyExist(academyUserId)) {
+			throw new AcademyNotFoundException(ErrorCode.ACADEMY_NOT_FOUND);
+		}
+		if (!isClassesExist(className)) {
+			throw new ClassesNotFoundException(ErrorCode.CLASSES_NOT_FOUND);
+		}
+		if (!isMemberExist(memberUserId)) {
+			throw new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
+		}
+		if(!isMemberClassesExist(className, memberUserId)) {
+			throw new MemberClassesNotFoundException(ErrorCode.MEMBER_CLASSES_NOT_FOUND);
+		}
+		classesService.unregister(className, memberUserId);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	private boolean isAcademyExist(String academyUserId) {

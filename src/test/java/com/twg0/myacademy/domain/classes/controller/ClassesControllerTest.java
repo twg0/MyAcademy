@@ -219,4 +219,35 @@ class ClassesControllerTest {
 			.andExpect(jsonPath("countOfStudent").value(10))
 			.andExpect(jsonPath("teacher").value("Choi"));
 	}
+
+	@Test
+	public void 학생해제API() throws Exception {
+		// given
+		String academyUserId = "seokang";
+		String className = "예비고1A과학";
+		String memberUserId = "hong";
+
+		final ClassesResponse classesResponse =
+			ClassesResponse.builder()
+				.subject("과학")
+				.className("예비고1A과학")
+				.countOfStudent(10)
+				.teacher("Choi")
+				.build();
+
+		when(academyService.exist(academyUserId)).thenReturn(true);
+		when(classesService.existByClassName(className)).thenReturn(true);
+		when(memberService.exist(memberUserId)).thenReturn(true);
+		when(classesService.existByClassNameAndMember(className, memberUserId)).thenReturn(true);
+		when(classesService.unregister(className, memberUserId)).thenReturn(classesResponse);
+		// when
+
+		ResultActions resultActions =
+			mvc.perform(
+					delete("/academy/{academyUserId}/classes/{className}/member/{memberUserId}", academyUserId, className,
+						memberUserId))
+				.andDo(print());
+		// then
+		resultActions.andExpect(status().isOk());
+	}
 }
